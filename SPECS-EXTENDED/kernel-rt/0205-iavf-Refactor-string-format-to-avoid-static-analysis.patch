@@ -1,0 +1,63 @@
+From ef535804d3b705686d78f04b35367a96e38be815 Mon Sep 17 00:00:00 2001
+From: Carolyn Wyborny <carolyn.wyborny@intel.com>
+Date: Tue, 31 Aug 2021 13:39:01 +0200
+Subject: [NET-NEXT 205/226] iavf: Refactor string format to avoid static
+ analysis warnings
+
+From: Karen Sornek <karen.sornek@intel.com>
+
+Change format to match variable type that is used in string.
+
+Use %u format for unsigned variable and %d format for signed variable
+to remove static analysis warnings.
+
+Backported from upstream commit c2fbcc94d511
+
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@intel.com>
+Signed-off-by: Karen Sornek <karen.sornek@intel.com>
+Tested-by: George Kuruvinakunnel <george.kuruvinakunnel@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
+---
+ drivers/net/ethernet/intel/iavf/iavf_main.c     | 6 +++---
+ drivers/net/ethernet/intel/iavf/iavf_virtchnl.c | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 84e9375c43f0..bdabaad47e39 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -464,14 +464,14 @@ iavf_request_traffic_irqs(struct iavf_adapter *adapter, char *basename)
+ 
+ 		if (q_vector->tx.ring && q_vector->rx.ring) {
+ 			snprintf(q_vector->name, sizeof(q_vector->name),
+-				 "iavf-%s-TxRx-%d", basename, rx_int_idx++);
++				 "iavf-%s-TxRx-%u", basename, rx_int_idx++);
+ 			tx_int_idx++;
+ 		} else if (q_vector->rx.ring) {
+ 			snprintf(q_vector->name, sizeof(q_vector->name),
+-				 "iavf-%s-rx-%d", basename, rx_int_idx++);
++				 "iavf-%s-rx-%u", basename, rx_int_idx++);
+ 		} else if (q_vector->tx.ring) {
+ 			snprintf(q_vector->name, sizeof(q_vector->name),
+-				 "iavf-%s-tx-%d", basename, tx_int_idx++);
++				 "iavf-%s-tx-%u", basename, tx_int_idx++);
+ 		} else {
+ 			/* skip this unused q_vector */
+ 			continue;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+index 5f2f7dc00d15..d01dbf472c0c 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
+@@ -1025,7 +1025,7 @@ static void iavf_print_link_message(struct iavf_adapter *adapter)
+ 	} else if (link_speed_mbps == SPEED_UNKNOWN) {
+ 		snprintf(speed, IAVF_MAX_SPEED_STRLEN, "%s", "Unknown Mbps");
+ 	} else {
+-		snprintf(speed, IAVF_MAX_SPEED_STRLEN, "%u %s",
++		snprintf(speed, IAVF_MAX_SPEED_STRLEN, "%d %s",
+ 			 link_speed_mbps, "Mbps");
+ 	}
+ 
+-- 
+2.34.1
+
