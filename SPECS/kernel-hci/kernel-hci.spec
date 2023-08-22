@@ -18,7 +18,7 @@
 Summary:        Linux Kernel for HCI
 Name:           kernel-hci
 Version:        5.15.131.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -312,6 +312,24 @@ Patch281:	0282-ice-implement-bridge-port-vlan.patch
 Patch282:	0283-ice-implement-static-version-of-ageing.patch
 Patch283:	0284-ice-add-tracepoints-for-the-switchdev-bridge.patch
 Patch284:	0285-ice-Accept-LAG-netdevs-in-bridge-offloads.patch
+Patch285:	0286-net-ice-fix-initializing-the-bitmap-in-the-switch-co.patch
+Patch286:	0287-net-ice-fix-error-NETIF_F_HW_VLAN_CTAG_FILTER-check-.patch
+Patch287:	0288-ice-Fix-VSIs-unable-to-share-unicast-MAC.patch
+Patch288:	0289-ice-do-not-setup-vlan-for-loopback-VSI.patch
+Patch289:	0290-ice-Fix-max-VLANs-available-for-VF.patch
+Patch290:	0291-ice-change-devlink-code-to-read-NVM-in-blocks.patch
+Patch291:	0292-ice-handle-E822-generic-device-ID-in-PLDM-header.patch
+Patch292:	0293-ice-ethtool-Prohibit-improper-channel-config-for-DCB.patch
+Patch293:	0294-ice-Fix-switchdev-rules-book-keeping.patch
+Patch294:	0295-ice-Fix-memory-corruption-in-VF-driver.patch
+Patch295:	0296-ice-Fix-queue-config-fail-handling.patch
+Patch296:	0297-ice-Sync-VLAN-filtering-features-for-DVM.patch
+Patch297:	0298-ice-Fix-PTP-TX-timestamp-offset-calculation.patch
+Patch298:	0299-ice-always-check-VF-VSI-pointer-values.patch
+Patch299:	0300-iavf-Fix-missing-state-logs.patch
+Patch300:	0301-iavf-Disallow-changing-rx-tx-frames-and-rx-tx-frames.patch
+Patch301:	0302-iavf-Fix-VLAN_V2-addition-rejection.patch
+Patch302:	0303-iavf-Fix-issue-with-MAC-address-of-VF-shown-as-zero.patch
 BuildRequires:  audit-devel
 BuildRequires:  bash
 BuildRequires:  bc
@@ -681,6 +699,27 @@ manipulation of eBPF programs and maps.
 %patch251 -p1
 %patch252 -p1
 %patch253 -p1
+<<<<<<< HEAD
+=======
+%patch254 -p1
+%patch255 -p1
+%patch256 -p1
+%patch257 -p1
+%patch258 -p1
+%patch259 -p1
+%patch260 -p1
+%patch261 -p1
+%patch262 -p1
+%patch263 -p1
+%patch264 -p1
+%patch265 -p1
+%patch266 -p1
+%patch267 -p1
+%patch268 -p1
+%patch269 -p1
+%patch270 -p1
+%patch271 -p1
+>>>>>>> d4a2523d4 (kernel-hci: Add patches and changes for E800 device support)
 	  
 make mrproper
 	  
@@ -914,6 +953,9 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 %{_sysconfdir}/bash_completion.d/bpftool
 
 %changelog
+* Mon Oct 2 2023 Carolyn Wyborny <carolyn.wyborny@intel.com> - 5.15.131.1-3
+- Add support for Intel E810 devices
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 5.15.131.1-2
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 
@@ -946,7 +988,12 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 * Wed Jun 28 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.118.1-1
 - Auto-upgrade to 5.15.118.1
 
+<<<<<<< HEAD
 >>>>>>> d39240a8c (Kernel upgrade to 5.15.126.1 version (#5991))
+=======
+=======
+>>>>>>> 0fc2721ca (kernel-hci: Add patches and changes for E800 device support)
+>>>>>>> d4a2523d4 (kernel-hci: Add patches and changes for E800 device support)
 * Tue Jun 13 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.116.1-1
 - Auto-upgrade to 5.15.116.1
 
