@@ -1,0 +1,101 @@
+From 5d36e4dda307ddbe084c7261f3094739dcbbbc61 Mon Sep 17 00:00:00 2001
+From: Carolyn Wyborny <carolyn.wyborny@intel.com>
+Date: Fri, 12 Nov 2021 17:06:02 -0800
+Subject: [NET-NEXT 070/226] ice: safer stats processing
+
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+
+The driver was zeroing live stats that could be fetched by
+ndo_get_stats64 at any time. This could result in inconsistent
+statistics, and the telltale sign was when reading stats frequently from
+/proc/net/dev, the stats would go backwards.
+
+Fix by collecting stats into a local, and delaying when we write to the
+structure so it's not incremental.
+
+Backported from upstream commit 1a0f25a52e08
+
+Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
+---
+ drivers/net/ethernet/intel/ice/ice_main.c | 29 ++++++++++++++---------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index c3a1b7910845..3ff646a6a197 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -5972,14 +5972,15 @@ ice_fetch_u64_stats_per_ring(struct u64_stats_sync *syncp, struct ice_q_stats st
+ /**
+  * ice_update_vsi_tx_ring_stats - Update VSI Tx ring stats counters
+  * @vsi: the VSI to be updated
++ * @vsi_stats: the stats struct to be updated
+  * @rings: rings to work on
+  * @count: number of rings
+  */
+ static void
+-ice_update_vsi_tx_ring_stats(struct ice_vsi *vsi, struct ice_tx_ring **rings,
+-			     u16 count)
++ice_update_vsi_tx_ring_stats(struct ice_vsi *vsi,
++			     struct rtnl_link_stats64 *vsi_stats,
++			     struct ice_tx_ring **rings, u16 count)
+ {
+-	struct rtnl_link_stats64 *vsi_stats = &vsi->net_stats;
+ 	u16 i;
+ 
+ 	for (i = 0; i < count; i++) {
+@@ -6003,15 +6004,13 @@ ice_update_vsi_tx_ring_stats(struct ice_vsi *vsi, struct ice_tx_ring **rings,
+  */
+ static void ice_update_vsi_ring_stats(struct ice_vsi *vsi)
+ {
+-	struct rtnl_link_stats64 *vsi_stats = &vsi->net_stats;
++	struct rtnl_link_stats64 *vsi_stats;
+ 	u64 pkts, bytes;
+ 	int i;
+ 
+-	/* reset netdev stats */
+-	vsi_stats->tx_packets = 0;
+-	vsi_stats->tx_bytes = 0;
+-	vsi_stats->rx_packets = 0;
+-	vsi_stats->rx_bytes = 0;
++	vsi_stats = kzalloc(sizeof(*vsi_stats), GFP_ATOMIC);
++	if (!vsi_stats)
++		return;
+ 
+ 	/* reset non-netdev (extended) stats */
+ 	vsi->tx_restart = 0;
+@@ -6023,7 +6022,8 @@ static void ice_update_vsi_ring_stats(struct ice_vsi *vsi)
+ 	rcu_read_lock();
+ 
+ 	/* update Tx rings counters */
+-	ice_update_vsi_tx_ring_stats(vsi, vsi->tx_rings, vsi->num_txq);
++	ice_update_vsi_tx_ring_stats(vsi, vsi_stats, vsi->tx_rings,
++				     vsi->num_txq);
+ 
+ 	/* update Rx rings counters */
+ 	ice_for_each_rxq(vsi, i) {
+@@ -6038,10 +6038,17 @@ static void ice_update_vsi_ring_stats(struct ice_vsi *vsi)
+ 
+ 	/* update XDP Tx rings counters */
+ 	if (ice_is_xdp_ena_vsi(vsi))
+-		ice_update_vsi_tx_ring_stats(vsi, vsi->xdp_rings,
++		ice_update_vsi_tx_ring_stats(vsi, vsi_stats, vsi->xdp_rings,
+ 					     vsi->num_xdp_txq);
+ 
+ 	rcu_read_unlock();
++
++	vsi->net_stats.tx_packets = vsi_stats->tx_packets;
++	vsi->net_stats.tx_bytes = vsi_stats->tx_bytes;
++	vsi->net_stats.rx_packets = vsi_stats->rx_packets;
++	vsi->net_stats.rx_bytes = vsi_stats->rx_bytes;
++
++	kfree(vsi_stats);
+ }
+ 
+ /**
+-- 
+2.34.1
+
