@@ -187,7 +187,7 @@ Patch156:	0157-ice-Use-the-proto-argument-for-VLAN-ops.patch
 Patch157:	0158-ice-Adjust-naming-for-inner-VLAN-operations.patch         
 Patch158:	0159-ice-Add-outer_vlan_ops-and-VSI-specific-VLAN-ops-imp.patch
 Patch159:	0160-ice-Add-hot-path-support-for-802.1Q-and-802.1ad-VLAN.patch
-Patch160:	0161-virtchnl-Use-the-BIT-macro-for-capability-offload-fl.patchh
+Patch160:	0161-virtchnl-Use-the-BIT-macro-for-capability-offload-fl.patch
 Patch161:	0162-virtchnl-Add-support-for-new-VLAN-capabilities.patch      
 Patch162:	0163-ice-Add-support-for-VIRTCHNL_VF_OFFLOAD_VLAN_V2.patch     
 Patch163:	0164-ice-Support-configuring-the-device-to-Double-VLAN-Mo.patch
@@ -313,7 +313,7 @@ Patch282:	0283-ice-implement-static-version-of-ageing.patch
 Patch283:	0284-ice-add-tracepoints-for-the-switchdev-bridge.patch
 Patch284:	0285-ice-Accept-LAG-netdevs-in-bridge-offloads.patch
 Patch285:	0286-net-ice-fix-initializing-the-bitmap-in-the-switch-co.patch
-Patch286:	0287-net-ice-fix-error-NETIF_F_HW_VLAN_CTAG_FILTER-check-.patch
+Patch286:	0287-net-ice-fix-error-NETIF_F_HW_VLAN_CTAG_FILTER-check.patch
 Patch287:	0288-ice-Fix-VSIs-unable-to-share-unicast-MAC.patch
 Patch288:	0289-ice-do-not-setup-vlan-for-loopback-VSI.patch
 Patch289:	0290-ice-Fix-max-VLANs-available-for-VF.patch
