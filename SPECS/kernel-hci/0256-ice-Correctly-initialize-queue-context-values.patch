@@ -1,0 +1,97 @@
+From beb0804796d4d7fb80cc6981af33f95e7595c467 Mon Sep 17 00:00:00 2001
+From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Tue, 20 Jun 2023 15:18:45 -0700
+Subject: [PATCH Mariner 2 256/265] ice: Correctly initialize queue context
+ values
+
+The ice_alloc_lan_q_ctx function allocates the queue context array for a
+given traffic class. This function uses devm_kcalloc which will
+zero-allocate the structure. Thus, prior to any queue being setup by
+ice_ena_vsi_txq, the q_ctx structure will have a q_handle of 0 and a q_teid
+of 0. These are potentially valid values.
+
+Modify the ice_alloc_lan_q_ctx function to initialize every member of the
+q_ctx array to have invalid values. Modify ice_dis_vsi_txq to ensure that
+it assigns q_teid to an invalid value when it assigns q_handle to the
+invalid value as well.
+
+This will allow other code to check whether the queue context is currently
+valid before operating on it.
+
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+---
+ drivers/net/ethernet/intel/ice/ice_common.c |  1 +
+ drivers/net/ethernet/intel/ice/ice_sched.c  | 23 ++++++++++++++++-----
+ 2 files changed, 19 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index 9619bdb9e49a..7c9636fe2005 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -4411,6 +4411,7 @@ ice_dis_vsi_txq(struct ice_port_info *pi, u16 vsi_handle, u8 tc, u8 num_queues,
+ 			break;
+ 		ice_free_sched_node(pi, node);
+ 		q_ctx->q_handle = ICE_INVAL_Q_HANDLE;
++		q_ctx->q_teid = ICE_INVAL_TEID;
+ 	}
+ 	mutex_unlock(&pi->sched_lock);
+ 	kfree(qg_list);
+diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
+index 3ceaf087a53e..75558c162e88 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sched.c
++++ b/drivers/net/ethernet/intel/ice/ice_sched.c
+@@ -563,18 +563,24 @@ ice_alloc_lan_q_ctx(struct ice_hw *hw, u16 vsi_handle, u8 tc, u16 new_numqs)
+ {
+ 	struct ice_vsi_ctx *vsi_ctx;
+ 	struct ice_q_ctx *q_ctx;
++	u16 idx;
+ 
+ 	vsi_ctx = ice_get_vsi_ctx(hw, vsi_handle);
+ 	if (!vsi_ctx)
+ 		return -EINVAL;
+ 	/* allocate LAN queue contexts */
+ 	if (!vsi_ctx->lan_q_ctx[tc]) {
+-		vsi_ctx->lan_q_ctx[tc] = devm_kcalloc(ice_hw_to_dev(hw),
+-						      new_numqs,
+-						      sizeof(*q_ctx),
+-						      GFP_KERNEL);
+-		if (!vsi_ctx->lan_q_ctx[tc])
++		q_ctx = devm_kcalloc(ice_hw_to_dev(hw), new_numqs,
++				     sizeof(*q_ctx), GFP_KERNEL);
++		if (!q_ctx)
+ 			return -ENOMEM;
++
++		for (idx = 0; idx < new_numqs; idx++) {
++			q_ctx[idx].q_handle = ICE_INVAL_Q_HANDLE;
++			q_ctx[idx].q_teid = ICE_INVAL_TEID;
++		}
++
++		vsi_ctx->lan_q_ctx[tc] = q_ctx;
+ 		vsi_ctx->num_lan_q_entries[tc] = new_numqs;
+ 		return 0;
+ 	}
+@@ -586,9 +592,16 @@ ice_alloc_lan_q_ctx(struct ice_hw *hw, u16 vsi_handle, u8 tc, u16 new_numqs)
+ 				     sizeof(*q_ctx), GFP_KERNEL);
+ 		if (!q_ctx)
+ 			return -ENOMEM;
++
+ 		memcpy(q_ctx, vsi_ctx->lan_q_ctx[tc],
+ 		       prev_num * sizeof(*q_ctx));
+ 		devm_kfree(ice_hw_to_dev(hw), vsi_ctx->lan_q_ctx[tc]);
++
++		for (idx = prev_num; idx < new_numqs; idx++) {
++			q_ctx[idx].q_handle = ICE_INVAL_Q_HANDLE;
++			q_ctx[idx].q_teid = ICE_INVAL_TEID;
++		}
++
+ 		vsi_ctx->lan_q_ctx[tc] = q_ctx;
+ 		vsi_ctx->num_lan_q_entries[tc] = new_numqs;
+ 	}
+-- 
+2.40.1
+
