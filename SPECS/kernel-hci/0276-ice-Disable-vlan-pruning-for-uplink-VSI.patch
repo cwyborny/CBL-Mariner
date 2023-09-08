@@ -1,0 +1,64 @@
+From e5e1cd1499d6370e4f2d3b1d28192231b10766ea Mon Sep 17 00:00:00 2001
+From: Wojciech Drewek <wojciech.drewek@intel.com>
+Date: Wed, 12 Jul 2023 13:03:29 +0200
+Subject: [PATCH 275/284] ice: Disable vlan pruning for uplink VSI
+
+Backported from upstream commit 6ab1155798c3 ("ice: Disable vlan pruning
+for uplink VSI").
+
+In switchdev mode, uplink VSI is configured to be default
+VSI which means it will receive all unmatched packets.
+In order to receive vlan packets we need to disable vlan pruning
+as well. This is done by dis_rx_filtering vlan op.
+
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@intel.com>
+---
+ drivers/net/ethernet/intel/ice/ice_eswitch.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+index be279f4d5101..4ad4998c5b80 100644
+--- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
++++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
+@@ -103,6 +103,10 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
+ 		rule_added = true;
+ 	}
+ 
++	vlan_ops = ice_get_compat_vsi_vlan_ops(uplink_vsi);
++	if (vlan_ops->dis_rx_filtering(uplink_vsi))
++		goto err_dis_rx;
++
+ 	if (ice_vsi_update_security(uplink_vsi, ice_vsi_ctx_set_allow_override))
+ 		goto err_override_uplink;
+ 
+@@ -114,6 +118,8 @@ static int ice_eswitch_setup_env(struct ice_pf *pf)
+ err_override_control:
+ 	ice_vsi_update_security(uplink_vsi, ice_vsi_ctx_clear_allow_override);
+ err_override_uplink:
++	vlan_ops->ena_rx_filtering(uplink_vsi);
++err_dis_rx:
+ 	if (rule_added)
+ 		ice_clear_dflt_vsi(uplink_vsi->vsw);
+ err_def_rx:
+@@ -385,9 +391,13 @@ static void ice_eswitch_release_env(struct ice_pf *pf)
+ {
+ 	struct ice_vsi *uplink_vsi = pf->switchdev.uplink_vsi;
+ 	struct ice_vsi *ctrl_vsi = pf->switchdev.control_vsi;
++	struct ice_vsi_vlan_ops *vlan_ops;
++
++	vlan_ops = ice_get_compat_vsi_vlan_ops(uplink_vsi);
+ 
+ 	ice_vsi_update_security(ctrl_vsi, ice_vsi_ctx_clear_allow_override);
+ 	ice_vsi_update_security(uplink_vsi, ice_vsi_ctx_clear_allow_override);
++	vlan_ops->ena_rx_filtering(uplink_vsi);
+ 	ice_clear_dflt_vsi(uplink_vsi->vsw);
+ 	ice_fltr_add_mac_and_broadcast(uplink_vsi,
+ 				       uplink_vsi->port_info->mac.perm_addr,
+-- 
+2.33.6
+

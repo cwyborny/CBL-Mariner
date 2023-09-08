@@ -1,0 +1,83 @@
+From f2438051a3145c0ea04c19cbffdefad206882445 Mon Sep 17 00:00:00 2001
+From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Date: Fri, 7 Apr 2023 18:52:17 +0200
+Subject: [PATCH 268/284] ice: specify field names in ice_prot_ext init
+
+Backported from upstream commit 17c6d8357da1 ("ice: specify field names in
+ice_prot_ext init").
+
+Anonymous initializers are now discouraged. Define ICE_PROTCOL_ENTRY
+macro to rewrite anonymous initializers to named one. No functional
+changes here.
+
+Suggested-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@intel.com>
+---
+ drivers/net/ethernet/intel/ice/ice_switch.c | 39 ++++++++++++---------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 6a1997c38c0a..0dcd79d2c526 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -4068,6 +4068,11 @@ int ice_share_res(struct ice_hw *hw, u16 type, u8 shared, u16 res_id)
+ 	return status;
+ }
+ 
++#define ICE_PROTOCOL_ENTRY(id, ...) {		\
++	.prot_type	= id,			\
++	.offs		= {__VA_ARGS__},	\
++}
++
+ /* This is mapping table entry that maps every word within a given protocol
+  * structure to the real byte offset as per the specification of that
+  * protocol header.
+@@ -4078,23 +4083,23 @@ int ice_share_res(struct ice_hw *hw, u16 type, u8 shared, u16 res_id)
+  * structure is added to that union.
+  */
+ static const struct ice_prot_ext_tbl_entry ice_prot_ext[ICE_PROTOCOL_LAST] = {
+-	{ ICE_MAC_OFOS,		{ 0, 2, 4, 6, 8, 10, 12 } },
+-	{ ICE_MAC_IL,		{ 0, 2, 4, 6, 8, 10, 12 } },
+-	{ ICE_ETYPE_OL,		{ 0 } },
+-	{ ICE_ETYPE_IL,		{ 0 } },
+-	{ ICE_VLAN_OFOS,	{ 2, 0 } },
+-	{ ICE_IPV4_OFOS,	{ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 } },
+-	{ ICE_IPV4_IL,		{ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 } },
+-	{ ICE_IPV6_OFOS,	{ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24,
+-				 26, 28, 30, 32, 34, 36, 38 } },
+-	{ ICE_IPV6_IL,		{ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24,
+-				 26, 28, 30, 32, 34, 36, 38 } },
+-	{ ICE_TCP_IL,		{ 0, 2 } },
+-	{ ICE_UDP_OF,		{ 0, 2 } },
+-	{ ICE_UDP_ILOS,		{ 0, 2 } },
+-	{ ICE_VXLAN,		{ 8, 10, 12, 14 } },
+-	{ ICE_GENEVE,		{ 8, 10, 12, 14 } },
+-	{ ICE_NVGRE,            { 0, 2, 4, 6 } },
++	ICE_PROTOCOL_ENTRY(ICE_MAC_OFOS, 0, 2, 4, 6, 8, 10, 12),
++	ICE_PROTOCOL_ENTRY(ICE_MAC_IL, 0, 2, 4, 6, 8, 10, 12),
++	ICE_PROTOCOL_ENTRY(ICE_ETYPE_OL, 0),
++	ICE_PROTOCOL_ENTRY(ICE_ETYPE_IL, 0),
++	ICE_PROTOCOL_ENTRY(ICE_VLAN_OFOS, 2, 0),
++	ICE_PROTOCOL_ENTRY(ICE_IPV4_OFOS, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18),
++	ICE_PROTOCOL_ENTRY(ICE_IPV4_IL, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18),
++	ICE_PROTOCOL_ENTRY(ICE_IPV6_OFOS, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20,
++			   22, 24, 26, 28, 30, 32, 34, 36, 38),
++	ICE_PROTOCOL_ENTRY(ICE_IPV6_IL, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20,
++			   22, 24, 26, 28, 30, 32, 34, 36, 38),
++	ICE_PROTOCOL_ENTRY(ICE_TCP_IL, 0, 2),
++	ICE_PROTOCOL_ENTRY(ICE_UDP_OF, 0, 2),
++	ICE_PROTOCOL_ENTRY(ICE_UDP_ILOS, 0, 2),
++	ICE_PROTOCOL_ENTRY(ICE_VXLAN, 8, 10, 12, 14),
++	ICE_PROTOCOL_ENTRY(ICE_GENEVE, 8, 10, 12, 14),
++	ICE_PROTOCOL_ENTRY(ICE_NVGRE, 0, 2, 4, 6),
+ };
+ 
+ static struct ice_protocol_entry ice_prot_id_tbl[ICE_PROTOCOL_LAST] = {
+-- 
+2.33.6
+
