@@ -264,6 +264,7 @@ Patch224	0223-devlink-Allow-control-devlink-ops-behavior-through-f.patch
 Patch225	0224-ice-Open-devlink-when-device-is-ready.patch
 Patch226	0225-ice-support-immediate-firmware-activation-via-devlin.patch
 Patch227	0226-ice-wait-5-s-for-EMP-reset-after-firmware-flash.patch
+Patch228	0255-idpf-Introduce-idpf-driver.patch
 # Kernel CVEs are addressed by moving to a newer version of the stable kernel.
 # Since kernel CVEs are filed against the upstream kernel version and not the
 # stable kernel version, our automated tooling will still flag the CVE as not
