@@ -1,7 +1,7 @@
-From d8d5fd356a23a25a1fa12fed4b9958f2c0d27e32 Mon Sep 17 00:00:00 2001
+From 3ad9f946d5fd1381623d3066e018d87d93dab903 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 10:43:37 -0700
-Subject: [PATCH Mariner 2 258/266] ice: Add driver support for firmware
+Subject: [PATCH Mariner 2 258/285] ice: Add driver support for firmware
  changes for LAG
 
 Add the defines, fields, and detection code for FW support of LAG for

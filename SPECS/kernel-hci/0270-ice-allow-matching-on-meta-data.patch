@@ -1,7 +1,7 @@
-From 617009690bc7a65c5514e269c5baa23a14f927d1 Mon Sep 17 00:00:00 2001
+From 46389329d82f23f1102689d183a5434ff14f2d30 Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Fri, 7 Apr 2023 18:52:18 +0200
-Subject: [PATCH 269/284] ice: allow matching on meta data
+Subject: [PATCH Mariner 2 270/285] ice: allow matching on meta data
 
 Backported from upstream commit 03592a14b938 ("ice: allow matching on meta
 data").
@@ -310,5 +310,5 @@ index fd967fd84648..19da29e52115 100644
  }
  
 -- 
-2.33.6
+2.40.1
 

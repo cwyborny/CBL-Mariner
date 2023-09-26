@@ -1,7 +1,7 @@
-From 67af0c8d46ceb203663668fe23cafbe1d717ef0e Mon Sep 17 00:00:00 2001
+From 06aaeb2cb97600dd7709d5747c0d4be1a4d96a26 Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Wed, 12 Jul 2023 13:03:36 +0200
-Subject: [PATCH 282/284] ice: implement static version of ageing
+Subject: [PATCH Mariner 2 283/285] ice: implement static version of ageing
 
 Backported from upstream commit e42c6e0c902b ("ice: implement static
 version of ageing").
@@ -172,5 +172,5 @@ index 978e9ce8e277..85a8fadb2928 100644
  	container_of(w, \
  		     struct ice_esw_br_fdb_work, \
 -- 
-2.33.6
+2.40.1
 

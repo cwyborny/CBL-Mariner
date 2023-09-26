@@ -1,7 +1,7 @@
-From 3ff7b50ed683db04c7b08984dd4651b65ae2b8e2 Mon Sep 17 00:00:00 2001
+From fc24024dedad39c52013a79d30b43603404b2084 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 20 Jun 2023 15:18:51 -0700
-Subject: [PATCH Mariner 2 263/266] ice: support non-standard teardown of bond
+Subject: [PATCH Mariner 2 263/285] ice: support non-standard teardown of bond
  interface
 
 Code for supporting removal of the PF driver (NETDEV_UNREGISTER) events for
@@ -13,14 +13,14 @@ Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
 Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 ---
- drivers/net/ethernet/intel/ice/ice_lag.c | 47 ++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lag.c | 50 ++++++++++++++++++++----
+ 1 file changed, 43 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 8f3b040c930a..16c7c5dc6f9a 100644
+index 9bb76785171b..383c7830c4ee 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
-@@ -1190,15 +1190,16 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
+@@ -1193,15 +1193,16 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
  		if (!primary_lag && lag->primary)
  			primary_lag = lag;
  
@@ -42,13 +42,16 @@ index 8f3b040c930a..16c7c5dc6f9a 100644
  	}
  }
  
-@@ -1401,6 +1402,38 @@ ice_lag_chk_comp(struct ice_lag *lag, void *ptr)
+@@ -1404,6 +1405,41 @@ ice_lag_chk_comp(struct ice_lag *lag, void *ptr)
  static void
  ice_lag_unregister(struct ice_lag *lag, struct net_device *event_netdev)
  {
 +	struct ice_netdev_priv *np;
 +	struct ice_pf *event_pf;
 +	struct ice_lag *p_lag;
++
++	if (!netif_is_ice(event_netdev))
++		return;
 +
 +	p_lag = ice_lag_find_primary(lag);
 +	np = netdev_priv(event_netdev);
@@ -81,7 +84,7 @@ index 8f3b040c930a..16c7c5dc6f9a 100644
  }
  
  /**
-@@ -1470,8 +1503,8 @@ static void ice_lag_process_event(struct work_struct *work)
+@@ -1473,8 +1509,8 @@ static void ice_lag_process_event(struct work_struct *work)
  	case NETDEV_UNREGISTER:
  		if (ice_is_feature_supported(pf, ICE_F_SRIOV_LAG)) {
  			netdev = lag_work->info.bonding_info.info.dev;

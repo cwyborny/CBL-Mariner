@@ -1,7 +1,8 @@
-From 0f0668ca39e5c84ca6dbe0b2100a199501832d28 Mon Sep 17 00:00:00 2001
+From 47fa030347ce7de69dc5575d67c8578522a4576c Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:27 +0200
-Subject: [PATCH 273/284] ice: Prohibit rx mode change in switchdev mode
+Subject: [PATCH Mariner 2 274/285] ice: Prohibit rx mode change in switchdev
+ mode
 
 Backported from upstream commit 2571a3fa6251 ("ice: Prohibit rx mode
 change in switchdev mode")
@@ -39,5 +40,5 @@ index 09b123c010c1..c4eea7fb0f1b 100644
  
  	/* Set the flags to synchronize filters
 -- 
-2.33.6
+2.40.1
 

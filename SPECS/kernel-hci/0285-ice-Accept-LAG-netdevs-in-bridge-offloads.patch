@@ -1,7 +1,7 @@
-From aac8d4590f4b9b49939568e3c5ca9b303b56e161 Mon Sep 17 00:00:00 2001
+From a311cd730459e1ca537b536ce6def9ff58bf1327 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Thu, 27 Jul 2023 10:35:39 +0200
-Subject: [PATCH 284/284] ice: Accept LAG netdevs in bridge offloads
+Subject: [PATCH Mariner 2 285/285] ice: Accept LAG netdevs in bridge offloads
 
 Backported from upstream commit 505a1fdadac1 ("ice: Accept LAG netdevs in
 bridge offloads").
@@ -92,5 +92,5 @@ index c3966431c873..04c2f35fb614 100644
  		err = ice_eswitch_br_uplink_port_init(bridge, pf);
  		trace_ice_eswitch_br_port_link(pf->br_port);
 -- 
-2.33.6
+2.40.1
 

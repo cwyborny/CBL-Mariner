@@ -1,7 +1,7 @@
-From e875853a3ebb542d9bcaeb3ecc411e0f63d089bf Mon Sep 17 00:00:00 2001
+From ed875737df7896fcbe435dbaaf43cd29c4579870 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:32 +0200
-Subject: [PATCH 278/284] ice: Switchdev FDB events support
+Subject: [PATCH Mariner 2 279/285] ice: Switchdev FDB events support
 
 Backported from upstream commit 7c945a1a8e5f ("ice: Switchdev FDB events
 support").
@@ -614,5 +614,5 @@ index 3ad28a17298f..e1b4eda7a890 100644
  ice_eswitch_br_offloads_deinit(struct ice_pf *pf);
  int
 -- 
-2.33.6
+2.40.1
 

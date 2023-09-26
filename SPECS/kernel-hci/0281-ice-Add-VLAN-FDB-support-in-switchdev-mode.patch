@@ -1,7 +1,7 @@
-From d283758b6e5c8e56a6bd1bee12c93976c64b0bb9 Mon Sep 17 00:00:00 2001
+From 93a9ae2b99b00b88f956c192a79c3b2f7f04fbf4 Mon Sep 17 00:00:00 2001
 From: Marcin Szycik <marcin.szycik@intel.com>
 Date: Wed, 12 Jul 2023 13:03:34 +0200
-Subject: [PATCH 280/284] ice: Add VLAN FDB support in switchdev mode
+Subject: [PATCH Mariner 2 281/285] ice: Add VLAN FDB support in switchdev mode
 
 Backported from upstream commit e9dda2cfab82 ("ice: Add VLAN FDB support
 in switchdev mode").
@@ -521,5 +521,5 @@ index d0dcf66ff08b..fa1f77f76292 100644
  ice_eswitch_br_offloads_deinit(struct ice_pf *pf);
  int
 -- 
-2.33.6
+2.40.1
 

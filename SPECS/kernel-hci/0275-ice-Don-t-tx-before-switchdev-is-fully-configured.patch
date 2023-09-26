@@ -1,7 +1,8 @@
-From 358825aace5c54b9810250bb88e9fbf0d2dabf8b Mon Sep 17 00:00:00 2001
+From 8775c19501d2e03c0b04c4c473edbfc53601cc49 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:28 +0200
-Subject: [PATCH 274/284] ice: Don't tx before switchdev is fully configured
+Subject: [PATCH Mariner 2 275/285] ice: Don't tx before switchdev is fully
+ configured
 
 Backported from upstream commit 7aa529a69e92 ("ice: Don't tx before
 switchdev is fully configured").
@@ -36,5 +37,5 @@ index 587afa2e1741..be279f4d5101 100644
  	    test_bit(ICE_VF_DIS, vsi->back->state))
  		return NETDEV_TX_BUSY;
 -- 
-2.33.6
+2.40.1
 

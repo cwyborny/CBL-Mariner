@@ -1,7 +1,7 @@
-From 10503665922492365238c8810a89da7057131c6a Mon Sep 17 00:00:00 2001
+From 8883c0465911ca0b6c7540d9bb740c668fe9cc2d Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 13:57:35 -0700
-Subject: [PATCH Mariner 2 261/266] ice: process events created by lag netdev
+Subject: [PATCH Mariner 2 261/285] ice: process events created by lag netdev
  event handler
 
 Add in the function framework for the processing of LAG events.  Also add
@@ -14,15 +14,15 @@ Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
 Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 ---
- drivers/net/ethernet/intel/ice/ice_lag.c      | 559 +++++++++++++++---
+ drivers/net/ethernet/intel/ice/ice_lag.c      | 562 +++++++++++++++---
  drivers/net/ethernet/intel/ice/ice_lag.h      |   1 +
  drivers/net/ethernet/intel/ice/ice_switch.c   |  10 +-
  drivers/net/ethernet/intel/ice/ice_switch.h   |   3 +
  drivers/net/ethernet/intel/ice/ice_virtchnl.c |   2 +
- 5 files changed, 501 insertions(+), 74 deletions(-)
+ 5 files changed, 504 insertions(+), 74 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index f76aa66cdd4b..af5772607abb 100644
+index f76aa66cdd4b..4e49420771db 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -10,6 +10,13 @@
@@ -39,7 +39,7 @@ index f76aa66cdd4b..af5772607abb 100644
  /**
   * ice_lag_set_primary - set PF LAG state as Primary
   * @lag: LAG info struct
-@@ -50,6 +57,147 @@ static void ice_lag_set_backup(struct ice_lag *lag)
+@@ -50,6 +57,150 @@ static void ice_lag_set_backup(struct ice_lag *lag)
  	lag->role = ICE_LAG_BACKUP;
  }
  
@@ -80,6 +80,9 @@ index f76aa66cdd4b..af5772607abb 100644
 +		struct ice_lag *tmp_lag;
 +
 +		entry = list_entry(tmp, struct ice_lag_netdev_list, node);
++		if (!netif_is_ice(entry->netdev))
++			continue;
++
 +		tmp_lag = ice_netdev_to_lag(entry->netdev);
 +		if (tmp_lag && tmp_lag->primary) {
 +			primary_lag = tmp_lag;
@@ -187,7 +190,7 @@ index f76aa66cdd4b..af5772607abb 100644
  /**
   * ice_display_lag_info - print LAG info
   * @lag: LAG info struct
-@@ -85,6 +233,83 @@ static void ice_display_lag_info(struct ice_lag *lag)
+@@ -85,6 +236,83 @@ static void ice_display_lag_info(struct ice_lag *lag)
  		upper, role, primary);
  }
  
@@ -271,7 +274,7 @@ index f76aa66cdd4b..af5772607abb 100644
  /**
   * ice_lag_info_event - handle NETDEV_BONDING_INFO event
   * @lag: LAG info struct
-@@ -126,105 +351,168 @@ static void ice_lag_info_event(struct ice_lag *lag, void *ptr)
+@@ -126,105 +354,168 @@ static void ice_lag_info_event(struct ice_lag *lag, void *ptr)
  	ice_display_lag_info(lag);
  }
  
@@ -396,7 +399,7 @@ index f76aa66cdd4b..af5772607abb 100644
  		}
  	}
 -	rcu_read_unlock();
--
+ 
 -	if (found)
 -		return;
 -
@@ -404,7 +407,7 @@ index f76aa66cdd4b..af5772607abb 100644
 -		dev_put(lag->upper_netdev);
 -		lag->upper_netdev = NULL;
 -	}
- 
+-
 -	ice_set_rdma_cap(pf);
  	lag->bonded = false;
  	lag->role = ICE_LAG_NONE;
@@ -499,7 +502,7 @@ index f76aa66cdd4b..af5772607abb 100644
  }
  
  /**
-@@ -257,6 +545,7 @@ static void ice_lag_init_feature_support_flag(struct ice_pf *pf)
+@@ -257,6 +548,7 @@ static void ice_lag_init_feature_support_flag(struct ice_pf *pf)
  static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
  {
  	struct netdev_notifier_changeupper_info *info;
@@ -507,7 +510,7 @@ index f76aa66cdd4b..af5772607abb 100644
  	struct net_device *netdev;
  
  	info = ptr;
-@@ -266,24 +555,107 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
+@@ -266,24 +558,107 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
  	if (netdev != lag->netdev)
  		return;
  
@@ -626,7 +629,7 @@ index f76aa66cdd4b..af5772607abb 100644
  }
  
  /**
-@@ -307,16 +679,31 @@ static void ice_lag_process_event(struct work_struct *work)
+@@ -307,16 +682,31 @@ static void ice_lag_process_event(struct work_struct *work)
  	switch (lag_work->event) {
  	case NETDEV_CHANGEUPPER:
  		info = &lag_work->info.changeupper_info;
@@ -661,7 +664,7 @@ index f76aa66cdd4b..af5772607abb 100644
  				ice_lag_unregister(lag_work->lag, netdev);
  		}
  		break;
-@@ -324,6 +711,7 @@ static void ice_lag_process_event(struct work_struct *work)
+@@ -324,6 +714,7 @@ static void ice_lag_process_event(struct work_struct *work)
  		break;
  	}
  
@@ -669,7 +672,7 @@ index f76aa66cdd4b..af5772607abb 100644
  	/* cleanup resources allocated for this work item */
  	list_for_each_safe(tmp, n, &lag_work->netdev_list.node) {
  		struct ice_lag_netdev_list *entry;
-@@ -465,6 +853,22 @@ static void ice_unregister_lag_handler(struct ice_lag *lag)
+@@ -465,6 +856,22 @@ static void ice_unregister_lag_handler(struct ice_lag *lag)
  	}
  }
  
@@ -692,7 +695,7 @@ index f76aa66cdd4b..af5772607abb 100644
  /**
   * ice_init_lag - initialize support for LAG
   * @pf: PF struct
-@@ -506,6 +910,12 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -506,6 +913,12 @@ int ice_init_lag(struct ice_pf *pf)
  		goto lag_error;
  	}
  
@@ -705,7 +708,7 @@ index f76aa66cdd4b..af5772607abb 100644
  	ice_display_lag_info(lag);
  
  	dev_dbg(dev, "INIT LAG complete\n");
-@@ -538,6 +948,9 @@ void ice_deinit_lag(struct ice_pf *pf)
+@@ -538,6 +951,9 @@ void ice_deinit_lag(struct ice_pf *pf)
  
  	flush_workqueue(ice_lag_wq);
  

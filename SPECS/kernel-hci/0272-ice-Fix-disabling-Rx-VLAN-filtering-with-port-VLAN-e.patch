@@ -1,8 +1,8 @@
-From 67267fef9f48a434fb582ab54ea2cd0fd62416e4 Mon Sep 17 00:00:00 2001
+From 994ae120ca2d0301eebc01625bfcb07cf05ef5e8 Mon Sep 17 00:00:00 2001
 From: Brett Creeley <brett.creeley@intel.com>
 Date: Mon, 16 Jan 2023 13:34:58 +0100
-Subject: [PATCH 271/284] ice: Fix disabling Rx VLAN filtering with port VLAN
- enabled
+Subject: [PATCH Mariner 2 272/285] ice: Fix disabling Rx VLAN filtering with
+ port VLAN enabled
 
 Backported from upstream commit c793f8ea15e3 ("ice: Fix disabling Rx VLAN
 filtering with port VLAN enabled").
@@ -79,5 +79,5 @@ index 5ecc0ee9a78e..b1ffb81893d4 100644
  				vlan_ops->ena_rx_filtering = noop_vlan;
  			else
 -- 
-2.33.6
+2.40.1
 

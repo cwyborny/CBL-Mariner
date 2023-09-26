@@ -1,7 +1,7 @@
-From 69e27bb99175fdcc45f405447f787062dce42f4d Mon Sep 17 00:00:00 2001
+From 70909bdf8e6ff86f0d252f98a9e35d12dde01501 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 22 Aug 2023 15:24:20 -0700
-Subject: [PATCH Mariner 2 256/266] ice: Remove LAG+SRIOV mutual exclusion
+Subject: [PATCH Mariner 2 256/285] ice: Remove LAG+SRIOV mutual exclusion
 
 There was a change previously to stop SR-IOV and LAG from existing on the
 same interface.  This was to prevent the violation of LACP (Link

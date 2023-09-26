@@ -1,7 +1,7 @@
-From 476b8d3329ef75bb154852d92b4e9a90f2bb2278 Mon Sep 17 00:00:00 2001
+From 34507bf59865c4210ee0facc5579739a24eb7c56 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 15:02:59 -0700
-Subject: [PATCH Mariner 2 262/266] ice: Flesh out implementation of support
+Subject: [PATCH Mariner 2 262/285] ice: Flesh out implementation of support
  for SRIOV on bonded interface
 
 Add in the functions that will allow a VF created on the primary interface
@@ -22,7 +22,7 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
  4 files changed, 822 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index af5772607abb..8f3b040c930a 100644
+index 4e49420771db..9bb76785171b 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -10,6 +10,11 @@
@@ -116,7 +116,7 @@ index af5772607abb..8f3b040c930a 100644
  /**
   * ice_lag_find_primary - returns pointer to primary interfaces lag struct
   * @lag: local interfaces lag struct
-@@ -233,6 +303,123 @@ static void ice_display_lag_info(struct ice_lag *lag)
+@@ -236,6 +306,123 @@ static void ice_display_lag_info(struct ice_lag *lag)
  		upper, role, primary);
  }
  
@@ -240,7 +240,7 @@ index af5772607abb..8f3b040c930a 100644
  /**
   * ice_lag_move_vf_node_tc - move scheduling nodes for one VF on one TC
   * @lag: lag info struct
-@@ -245,6 +432,110 @@ static void
+@@ -248,6 +435,110 @@ static void
  ice_lag_move_vf_node_tc(struct ice_lag *lag, u8 oldport, u8 newport,
  			u16 vsi_num, u8 tc)
  {
@@ -351,7 +351,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -274,6 +565,66 @@ ice_lag_move_single_vf_nodes(struct ice_lag *lag, u8 oldport, u8 newport,
+@@ -277,6 +568,66 @@ ice_lag_move_single_vf_nodes(struct ice_lag *lag, u8 oldport, u8 newport,
   */
  void ice_lag_move_new_vf_nodes(struct ice_vf *vf)
  {
@@ -418,7 +418,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -308,6 +659,50 @@ static void ice_lag_move_vf_nodes(struct ice_lag *lag, u8 oldport, u8 newport)
+@@ -311,6 +662,50 @@ static void ice_lag_move_vf_nodes(struct ice_lag *lag, u8 oldport, u8 newport)
  static void
  ice_lag_cfg_cp_fltr(struct ice_lag *lag, bool add)
  {
@@ -469,7 +469,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -362,6 +757,100 @@ static void
+@@ -365,6 +760,100 @@ static void
  ice_lag_reclaim_vf_tc(struct ice_lag *lag, struct ice_hw *src_hw, u16 vsi_num,
  		      u8 tc)
  {
@@ -570,7 +570,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -476,6 +965,65 @@ static void
+@@ -479,6 +968,65 @@ static void
  ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
  		 bool link)
  {
@@ -636,7 +636,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -504,6 +1052,38 @@ static void ice_lag_primary_swid(struct ice_lag *lag, bool link)
+@@ -507,6 +1055,38 @@ static void ice_lag_primary_swid(struct ice_lag *lag, bool link)
   */
  static void ice_lag_add_prune_list(struct ice_lag *lag, struct ice_pf *event_pf)
  {
@@ -675,7 +675,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -513,6 +1093,39 @@ static void ice_lag_add_prune_list(struct ice_lag *lag, struct ice_pf *event_pf)
+@@ -516,6 +1096,39 @@ static void ice_lag_add_prune_list(struct ice_lag *lag, struct ice_pf *event_pf)
   */
  static void ice_lag_del_prune_list(struct ice_lag *lag, struct ice_pf *event_pf)
  {
@@ -715,7 +715,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -539,8 +1152,6 @@ static void ice_lag_init_feature_support_flag(struct ice_pf *pf)
+@@ -542,8 +1155,6 @@ static void ice_lag_init_feature_support_flag(struct ice_pf *pf)
   * ice_lag_changeupper_event - handle LAG changeupper event
   * @lag: LAG info struct
   * @ptr: opaque pointer data
@@ -724,7 +724,7 @@ index af5772607abb..8f3b040c930a 100644
   */
  static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
  {
-@@ -600,6 +1211,40 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
+@@ -603,6 +1214,40 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
   */
  static void ice_lag_monitor_link(struct ice_lag *lag, void *ptr)
  {
@@ -765,7 +765,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -612,6 +1257,67 @@ static void ice_lag_monitor_link(struct ice_lag *lag, void *ptr)
+@@ -615,6 +1260,67 @@ static void ice_lag_monitor_link(struct ice_lag *lag, void *ptr)
   */
  static void ice_lag_monitor_active(struct ice_lag *lag, void *ptr)
  {
@@ -833,7 +833,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -622,6 +1328,68 @@ static void ice_lag_monitor_active(struct ice_lag *lag, void *ptr)
+@@ -625,6 +1331,68 @@ static void ice_lag_monitor_active(struct ice_lag *lag, void *ptr)
  static bool
  ice_lag_chk_comp(struct ice_lag *lag, void *ptr)
  {
@@ -902,7 +902,7 @@ index af5772607abb..8f3b040c930a 100644
  	return true;
  }
  
-@@ -856,17 +1624,38 @@ static void ice_unregister_lag_handler(struct ice_lag *lag)
+@@ -859,17 +1627,38 @@ static void ice_unregister_lag_handler(struct ice_lag *lag)
  /**
   * ice_create_lag_recipe
   * @hw: pointer to HW struct
@@ -924,12 +924,12 @@ index af5772607abb..8f3b040c930a 100644
 +	err = ice_alloc_recipe(hw, rid);
 +	if (err)
 +		return err;
- 
--	return rid;
++
 +	new_rcp = kzalloc(ICE_RECIPE_LEN * ICE_MAX_NUM_RECIPES, GFP_KERNEL);
 +	if (!new_rcp)
 +		return -ENOMEM;
-+
+ 
+-	return rid;
 +	memcpy(new_rcp, base_recipe, ICE_RECIPE_LEN);
 +	new_rcp->content.act_ctrl_fwd_priority = prio;
 +	new_rcp->content.rid = *rid | ICE_AQ_RECIPE_ID_IS_ROOT;
@@ -947,7 +947,7 @@ index af5772607abb..8f3b040c930a 100644
  }
  
  /**
-@@ -881,7 +1670,8 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -884,7 +1673,8 @@ int ice_init_lag(struct ice_pf *pf)
  	struct device *dev = ice_pf_to_dev(pf);
  	struct ice_lag *lag;
  	struct ice_vsi *vsi;
@@ -957,7 +957,7 @@ index af5772607abb..8f3b040c930a 100644
  
  	ice_lag_init_feature_support_flag(pf);
  
-@@ -900,6 +1690,7 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -903,6 +1693,7 @@ int ice_init_lag(struct ice_pf *pf)
  	lag->pf = pf;
  	lag->netdev = vsi->netdev;
  	lag->role = ICE_LAG_NONE;
@@ -965,7 +965,7 @@ index af5772607abb..8f3b040c930a 100644
  	lag->bonded = false;
  	lag->upper_netdev = NULL;
  	lag->notif_block.notifier_call = NULL;
-@@ -910,10 +1701,23 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -913,10 +1704,23 @@ int ice_init_lag(struct ice_pf *pf)
  		goto lag_error;
  	}
  

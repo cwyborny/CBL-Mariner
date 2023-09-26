@@ -1,7 +1,8 @@
-From 75d2678f5ef41c0e3b3524055c864f855e940044 Mon Sep 17 00:00:00 2001
+From b279ca1a3cd10b6d929531d1dc97012c04bd3b5b Mon Sep 17 00:00:00 2001
 From: Marcin Szycik <marcin.szycik@intel.com>
 Date: Wed, 12 Jul 2023 13:03:33 +0200
-Subject: [PATCH 279/284] ice: Add guard rule when creating FDB in switchdev
+Subject: [PATCH Mariner 2 280/285] ice: Add guard rule when creating FDB in
+ switchdev
 
 Backported from upstream commit bccd9bce29e0 ("ice: Add guard rule when
 creating FDB in switchdev").
@@ -458,5 +459,5 @@ index 432fbdef0638..c2eb98ce26c9 100644
  };
  
 -- 
-2.33.6
+2.40.1
 

@@ -1,7 +1,7 @@
-From e5e1cd1499d6370e4f2d3b1d28192231b10766ea Mon Sep 17 00:00:00 2001
+From d3a651ddcd41aa040fc72b230a8142fc66de041d Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:29 +0200
-Subject: [PATCH 275/284] ice: Disable vlan pruning for uplink VSI
+Subject: [PATCH Mariner 2 276/285] ice: Disable vlan pruning for uplink VSI
 
 Backported from upstream commit 6ab1155798c3 ("ice: Disable vlan pruning
 for uplink VSI").
@@ -60,5 +60,5 @@ index be279f4d5101..4ad4998c5b80 100644
  	ice_fltr_add_mac_and_broadcast(uplink_vsi,
  				       uplink_vsi->port_info->mac.perm_addr,
 -- 
-2.33.6
+2.40.1
 

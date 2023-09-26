@@ -1,7 +1,8 @@
-From 25385b78aafcd007ab9057b9f8fb09d0ec7418a9 Mon Sep 17 00:00:00 2001
+From 90d9310532d5fe61eb7861db21a03d77200cbbfb Mon Sep 17 00:00:00 2001
 From: Pawel Chmielewski <pawel.chmielewski@intel.com>
 Date: Wed, 12 Jul 2023 13:03:37 +0200
-Subject: [PATCH 283/284] ice: add tracepoints for the switchdev bridge
+Subject: [PATCH Mariner 2 284/285] ice: add tracepoints for the switchdev
+ bridge
 
 Backported from upstream commit d129c2a245bf ("ice: add tracepoints for
 the switchdev bridge").
@@ -200,5 +201,5 @@ index ae98d5a8ff60..b2f5c9fe0149 100644
  
  #endif /* _ICE_TRACE_H_ */
 -- 
-2.33.6
+2.40.1
 

@@ -1,7 +1,7 @@
-From 7dcff267b07764255d2dce0d3c500ec82f2df87e Mon Sep 17 00:00:00 2001
+From 0e62ba754d29a68855c016ac403f2344918b32c6 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 20 Jun 2023 15:18:54 -0700
-Subject: [PATCH Mariner 2 266/266] ice: update reset path for SRIOV LAG
+Subject: [PATCH Mariner 2 266/285] ice: update reset path for SRIOV LAG
  support
 
 Add code to rebuild the LAG resources when rebuilding the state of the
@@ -24,10 +24,10 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
  3 files changed, 244 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index a74c32df4d0a..15b91fe32ea2 100644
+index 6e87a62e9ba6..4ca21199e69c 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
-@@ -961,6 +961,7 @@ static void ice_lag_link_unlink(struct ice_lag *lag, void *ptr)
+@@ -964,6 +964,7 @@ static void ice_lag_link_unlink(struct ice_lag *lag, void *ptr)
   * @link: Is this a linking activity
   *
   * If link is false, then primary_swid should be expected to not be valid
@@ -35,7 +35,7 @@ index a74c32df4d0a..15b91fe32ea2 100644
   */
  static void
  ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
-@@ -970,7 +971,7 @@ ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
+@@ -973,7 +974,7 @@ ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
  	struct ice_aqc_set_port_params *cmd;
  	struct ice_aq_desc desc;
  	u16 buf_len, swid;
@@ -44,7 +44,7 @@ index a74c32df4d0a..15b91fe32ea2 100644
  
  	buf_len = struct_size(buf, elem, 1);
  	buf = kzalloc(buf_len, GFP_KERNEL);
-@@ -1021,7 +1022,20 @@ ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
+@@ -1024,7 +1025,20 @@ ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
  	ice_fill_dflt_direct_cmd_desc(&desc, ice_aqc_opc_set_port_params);
  
  	cmd->swid = cpu_to_le16(ICE_AQC_PORT_SWID_VALID | swid);
@@ -66,7 +66,7 @@ index a74c32df4d0a..15b91fe32ea2 100644
  	if (status)
  		dev_err(ice_pf_to_dev(local_lag->pf), "Error setting SWID in port params %d\n",
  			status);
-@@ -1029,7 +1043,7 @@ ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
+@@ -1032,7 +1046,7 @@ ice_lag_set_swid(u16 primary_swid, struct ice_lag *local_lag,
  
  /**
   * ice_lag_primary_swid - set/clear the SHARED attrib of primary's SWID
@@ -75,7 +75,7 @@ index a74c32df4d0a..15b91fe32ea2 100644
   * @link: is this a linking activity
   *
   * Implement setting primary SWID as shared using 0x020B
-@@ -1770,6 +1784,135 @@ static int ice_create_lag_recipe(struct ice_hw *hw, u16 *rid,
+@@ -1768,6 +1782,135 @@ static int ice_create_lag_recipe(struct ice_hw *hw, u16 *rid,
  	return err;
  }
  
@@ -211,7 +211,7 @@ index a74c32df4d0a..15b91fe32ea2 100644
  /**
   * ice_init_lag - initialize support for LAG
   * @pf: PF struct
-@@ -1871,3 +2014,85 @@ void ice_deinit_lag(struct ice_pf *pf)
+@@ -1869,3 +2012,85 @@ void ice_deinit_lag(struct ice_pf *pf)
  
  	pf->lag = NULL;
  }

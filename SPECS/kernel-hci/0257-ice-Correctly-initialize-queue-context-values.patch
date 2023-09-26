@@ -1,7 +1,7 @@
-From beb0804796d4d7fb80cc6981af33f95e7595c467 Mon Sep 17 00:00:00 2001
+From 31b22f3ca368f19a4e8e2b29259614ac6c98f47c Mon Sep 17 00:00:00 2001
 From: Jacob Keller <jacob.e.keller@intel.com>
 Date: Tue, 20 Jun 2023 15:18:45 -0700
-Subject: [PATCH Mariner 2 257/266] ice: Correctly initialize queue context
+Subject: [PATCH Mariner 2 257/285] ice: Correctly initialize queue context
  values
 
 The ice_alloc_lan_q_ctx function allocates the queue context array for a

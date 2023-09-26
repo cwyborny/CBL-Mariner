@@ -1,7 +1,7 @@
-From 6da92cb23e52c9f7219cae6db60c2520a874bd91 Mon Sep 17 00:00:00 2001
+From 91995b00a65ec3406d1e4a27799de1543fc9c50d Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 20 Jun 2023 15:18:53 -0700
-Subject: [PATCH Mariner 2 265/266] ice: enforce no DCB config changing when in
+Subject: [PATCH Mariner 2 265/285] ice: enforce no DCB config changing when in
  bond
 
 To support SRIOV LAG, the driver cannot allow changes to an interface's DCB

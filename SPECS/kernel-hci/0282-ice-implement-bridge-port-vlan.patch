@@ -1,7 +1,7 @@
-From d86a1bda8df0b0e9fb1131e635af7349e4321b8d Mon Sep 17 00:00:00 2001
+From ea5017ca178288a84eaf7e9f65a6fed08ca75cec Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Wed, 12 Jul 2023 13:03:35 +0200
-Subject: [PATCH 281/284] ice: implement bridge port vlan
+Subject: [PATCH Mariner 2 282/285] ice: implement bridge port vlan
 
 Backported from upstream commit 2946204b3fa8 ("ice: implement bridge port
 vlan").
@@ -611,5 +611,5 @@ index 5b47568f6256..b2d2330dedcb 100644
  
  void ice_vsi_init_vlan_ops(struct ice_vsi *vsi);
 -- 
-2.33.6
+2.40.1
 

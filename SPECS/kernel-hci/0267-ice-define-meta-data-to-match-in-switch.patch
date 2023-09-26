@@ -1,7 +1,7 @@
-From af03ddd293076f8d739fcc6ff916ce3f48804eb7 Mon Sep 17 00:00:00 2001
+From 7c3a553ab655cb81ee4c2ec1a3d482c25f75a1c9 Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Fri, 7 Apr 2023 18:52:15 +0200
-Subject: [PATCH 266/284] ice: define meta data to match in switch
+Subject: [PATCH Mariner 2 267/285] ice: define meta data to match in switch
 
 Backported from upstream commit ecd01b69a5f8 ("ice: define meta data to
 match in switch").
@@ -273,5 +273,5 @@ index 1b618de592b7..5d53cf661806 100644
  		.lkup_idx = ICE_SW_LKUP_VLAN_PKT_FLAGS_LKUP_IDX,
  	},
 -- 
-2.33.6
+2.40.1
 
