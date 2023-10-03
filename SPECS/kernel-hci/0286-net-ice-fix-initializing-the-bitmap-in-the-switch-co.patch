@@ -1,10 +1,8 @@
-From 77de410322bdecbedbc3254e4215db0f5dae7eee Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Fri, 24 Jun 2022 14:13:11 +0200
-Subject: [NET-NEXT 255/273] net/ice: fix initializing the bitmap in the switch
- code
-
+From 72580692b6294cbc312d3210eb23b6801ded1bf2 Mon Sep 17 00:00:00 2001
 From: Alexander Lobakin <alexandr.lobakin@intel.com>
+Date: Fri, 24 Jun 2022 14:13:11 +0200
+Subject: [PATCH Mariner 2 286/304] net/ice: fix initializing the bitmap in the
+ switch code
 
 [ Upstream commit 2f7ee2a72ccec8b85a05c4644d7ec9f40c1c50c8 ]
 
@@ -53,10 +51,10 @@ Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index dca50d8e3321..76361c3b39db 100644
+index ee7b06061995..06d33bab1c9d 100644
 --- a/drivers/net/ethernet/intel/ice/ice_switch.c
 +++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -4381,7 +4381,7 @@ ice_find_free_recp_res_idx(struct ice_hw *hw, const unsigned long *profiles,
+@@ -4440,7 +4440,7 @@ ice_find_free_recp_res_idx(struct ice_hw *hw, const unsigned long *profiles,
  	bitmap_zero(recipes, ICE_MAX_NUM_RECIPES);
  	bitmap_zero(used_idx, ICE_MAX_FV_WORDS);
  
@@ -66,5 +64,5 @@ index dca50d8e3321..76361c3b39db 100644
  	/* For each profile we are going to associate the recipe with, add the
  	 * recipes that are associated with that profile. This will give us
 -- 
-2.34.1
+2.40.1
 

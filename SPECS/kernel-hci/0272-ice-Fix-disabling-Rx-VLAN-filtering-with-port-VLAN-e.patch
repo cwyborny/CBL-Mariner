@@ -1,7 +1,7 @@
-From 994ae120ca2d0301eebc01625bfcb07cf05ef5e8 Mon Sep 17 00:00:00 2001
+From 2a54f203317d11210d7733f29710cd1a8c1394e0 Mon Sep 17 00:00:00 2001
 From: Brett Creeley <brett.creeley@intel.com>
 Date: Mon, 16 Jan 2023 13:34:58 +0100
-Subject: [PATCH Mariner 2 272/285] ice: Fix disabling Rx VLAN filtering with
+Subject: [PATCH Mariner 2 272/304] ice: Fix disabling Rx VLAN filtering with
  port VLAN enabled
 
 Backported from upstream commit c793f8ea15e3 ("ice: Fix disabling Rx VLAN

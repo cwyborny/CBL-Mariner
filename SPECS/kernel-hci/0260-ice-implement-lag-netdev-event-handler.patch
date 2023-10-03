@@ -1,7 +1,7 @@
-From 17b63d82078e6f6b5b6cd0ecdc8a29127cd07831 Mon Sep 17 00:00:00 2001
+From 7e68a48eb358b334ba21faf923186b2724d089d2 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 13:28:28 -0700
-Subject: [PATCH Mariner 2 260/285] ice: implement lag netdev event handler
+Subject: [PATCH Mariner 2 260/304] ice: implement lag netdev event handler
 
 The event handler for LAG will create a work item to place on the ordered
 workqueue to be processed.

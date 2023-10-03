@@ -1,7 +1,7 @@
-From dab16c038f630db02ae96b5882760c3fffa05ce8 Mon Sep 17 00:00:00 2001
+From 51e7b30135086f3e7d7efc129a10ffd81ea56d5a Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Fri, 7 Apr 2023 18:52:16 +0200
-Subject: [PATCH Mariner 2 268/285] ice: remove redundant Rx field from rule
+Subject: [PATCH Mariner 2 268/304] ice: remove redundant Rx field from rule
  info
 
 Backported from upstream commit 40fd749245f2 ("ice: remove redundant Rx

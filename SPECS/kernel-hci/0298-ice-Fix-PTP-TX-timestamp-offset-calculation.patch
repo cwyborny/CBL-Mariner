@@ -1,9 +1,8 @@
-From 20711c331652e234ec469f1c5208a3bfe269f2f4 Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Tue, 10 May 2022 13:03:43 +0200
-Subject: [NET-NEXT 268/273] ice: Fix PTP TX timestamp offset calculation
-
+From 55883727628f2f33cd66c9e6581deee199121e6b Mon Sep 17 00:00:00 2001
 From: Michal Michalik <michal.michalik@intel.com>
+Date: Tue, 10 May 2022 13:03:43 +0200
+Subject: [PATCH Mariner 2 298/304] ice: Fix PTP TX timestamp offset
+ calculation
 
 [ Upstream commit 71a579f0d3777a704355e6f1572dfba92a9b58b2 ]
 
@@ -86,5 +85,5 @@ index afd048d69959..10e396abf130 100644
  
  /**
 -- 
-2.34.1
+2.40.1
 

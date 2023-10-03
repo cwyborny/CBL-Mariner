@@ -1,9 +1,7 @@
-From ebd6b5e450d5e9a61fbc82737a451414197f0d5b Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Thu, 2 Jun 2022 12:09:04 +0200
-Subject: [NET-NEXT 266/273] ice: Fix queue config fail handling
-
+From 42d5e44cf81c5cafddb24bd67461df6689f6a572 Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
+Date: Thu, 2 Jun 2022 12:09:04 +0200
+Subject: [PATCH Mariner 2 296/304] ice: Fix queue config fail handling
 
 [ Upstream commit be2af71496a54a7195ac62caba6fab49cfe5006c ]
 
@@ -26,11 +24,11 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl.c | 53 +++++++++----------
- 1 file changed, 26 insertions(+), 27 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c | 54 +++++++++----------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-index 9478e469346c..4ed5c250c466 100644
+index 1c646a2dfc9f..d870087527dd 100644
 --- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
 +++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
 @@ -1587,35 +1587,27 @@ static int ice_vc_cfg_irq_map_msg(struct ice_vf *vf, u8 *msg)
@@ -127,7 +125,7 @@ index 9478e469346c..4ed5c250c466 100644
  
  			vsi->max_frame = qpi->rxq.max_pkt_size;
  			/* add space for the port VLAN since the VF driver is
-@@ -1690,16 +1675,30 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
+@@ -1690,7 +1675,8 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
  				vsi->max_frame += VLAN_HLEN;
  
  			if (ice_vsi_cfg_single_rxq(vsi, q_idx)) {
@@ -137,11 +135,14 @@ index 9478e469346c..4ed5c250c466 100644
  				goto error_param;
  			}
  		}
- 	}
+@@ -1698,10 +1684,24 @@ static int ice_vc_cfg_qs_msg(struct ice_vf *vf, u8 *msg)
+ 
+ 	ice_lag_move_new_vf_nodes(vf);
  
 +	/* send the response to the VF */
 +	return ice_vc_send_msg_to_vf(vf, VIRTCHNL_OP_CONFIG_VSI_QUEUES,
 +				     VIRTCHNL_STATUS_SUCCESS, NULL, 0);
++
  error_param:
 +	/* disable whatever we can */
 +	for (; i >= 0; i--) {
@@ -162,5 +163,5 @@ index 9478e469346c..4ed5c250c466 100644
  
  /**
 -- 
-2.34.1
+2.40.1
 

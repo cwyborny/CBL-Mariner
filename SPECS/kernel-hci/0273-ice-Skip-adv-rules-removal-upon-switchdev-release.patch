@@ -1,7 +1,7 @@
-From 3ada574ee2b90fa7c998bed81537bacb0f8fda8c Mon Sep 17 00:00:00 2001
+From 612754d3659abc09aa2d6de289edfda1e3db4466 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:26 +0200
-Subject: [PATCH Mariner 2 273/285] ice: Skip adv rules removal upon switchdev
+Subject: [PATCH Mariner 2 273/304] ice: Skip adv rules removal upon switchdev
  release
 
 Backported from upstream commit ee95d4420a2f ("ice: Skip adv rules removal

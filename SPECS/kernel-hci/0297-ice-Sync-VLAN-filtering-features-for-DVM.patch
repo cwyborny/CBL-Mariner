@@ -1,9 +1,7 @@
-From e258fe970480ca08952d2b1c80c3aa35e77c6e6b Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Tue, 7 Jun 2022 08:54:57 +0200
-Subject: [NET-NEXT 267/273] ice: Sync VLAN filtering features for DVM
-
+From 4fd8301527679ae945d432720a59eef210c156b3 Mon Sep 17 00:00:00 2001
 From: Roman Storozhenko <roman.storozhenko@intel.com>
+Date: Tue, 7 Jun 2022 08:54:57 +0200
+Subject: [PATCH Mariner 2 297/304] ice: Sync VLAN filtering features for DVM
 
 [ Upstream commit 9542ef4fba8c73e176b8aa18a8adf04aecb889e5 ]
 
@@ -26,10 +24,10 @@ Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
  1 file changed, 31 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index d9c6cd731548..9c0a5549c164 100644
+index 9eed26364657..1d970e24594a 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5753,25 +5753,38 @@ static netdev_features_t
+@@ -5780,25 +5780,38 @@ static netdev_features_t
  ice_fix_features(struct net_device *netdev, netdev_features_t features)
  {
  	struct ice_netdev_priv *np = netdev_priv(netdev);
@@ -87,5 +85,5 @@ index d9c6cd731548..9c0a5549c164 100644
  	}
  
 -- 
-2.34.1
+2.40.1
 

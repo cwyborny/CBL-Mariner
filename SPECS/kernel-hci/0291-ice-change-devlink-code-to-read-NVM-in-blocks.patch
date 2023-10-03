@@ -1,9 +1,8 @@
-From e9a0cc2d7374f90b560bf657d8a324355e3bcfab Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Wed, 8 Jun 2022 14:48:32 -0700
-Subject: [NET-NEXT 260/273] ice: change devlink code to read NVM in blocks
-
+From 46e6c3b603cd73494aa5cc20427ce55198308ed7 Mon Sep 17 00:00:00 2001
 From: Paul M Stillwell Jr <paul.m.stillwell.jr@intel.com>
+Date: Wed, 8 Jun 2022 14:48:32 -0700
+Subject: [PATCH Mariner 2 291/304] ice: change devlink code to read NVM in
+ blocks
 
 [ Upstream commit 7b6f9462a3234c35cf808453d39a074a04e71de1 ]
 
@@ -119,5 +118,5 @@ index af2206f3b2f7..7bb5787f4e0b 100644
  	*data = nvm_data;
  
 -- 
-2.34.1
+2.40.1
 

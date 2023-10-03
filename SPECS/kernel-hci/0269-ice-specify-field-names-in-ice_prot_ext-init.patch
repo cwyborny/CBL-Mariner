@@ -1,7 +1,7 @@
-From 58e4166f6e4ef0d850f328d99d2b4b13210415b8 Mon Sep 17 00:00:00 2001
+From cd67d6df28e8bf0cbff8dd6b5eee184bdd69aeef Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Fri, 7 Apr 2023 18:52:17 +0200
-Subject: [PATCH Mariner 2 269/285] ice: specify field names in ice_prot_ext
+Subject: [PATCH Mariner 2 269/304] ice: specify field names in ice_prot_ext
  init
 
 Backported from upstream commit 17c6d8357da1 ("ice: specify field names in

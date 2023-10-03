@@ -1,10 +1,8 @@
-From 436bc3e5f095920e07e67a634910813d18fbdaf8 Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Mon, 6 Jun 2022 09:01:21 +0200
-Subject: [NET-NEXT 262/273] ice: ethtool: Prohibit improper channel config for
- DCB
-
+From f944ab07b51d5c16d4cd5d8613bfe8f013115d6a Mon Sep 17 00:00:00 2001
 From: Anatolii Gerasymenko <anatolii.gerasymenko@intel.com>
+Date: Mon, 6 Jun 2022 09:01:21 +0200
+Subject: [PATCH Mariner 2 293/304] ice: ethtool: Prohibit improper channel
+ config for DCB
 
 [ Upstream commit a632b2a4c920ce5af29410fb091f7ee6d2e77dc6 ]
 
@@ -101,7 +99,7 @@ index 83036ec7dbb5..249c58614d22 100644
  		netdev_err(dev, "Maximum allowed Rx channels is %d\n",
  			   ice_get_max_rxq(pf));
 diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 1edd9ecdc9ee..e51f44d71420 100644
+index 9c2d9b7bf1a6..d86c5ecc1569 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lib.c
 @@ -909,7 +909,7 @@ static void ice_set_dflt_vsi_ctx(struct ice_hw *hw, struct ice_vsi_ctx *ctxt)
@@ -153,7 +151,7 @@ index 1edd9ecdc9ee..e51f44d71420 100644
  		if (!init_vsi) /* means VSI being updated */
  			/* must to indicate which section of VSI context are
  			 * being modified
-@@ -3465,7 +3481,7 @@ void ice_vsi_cfg_netdev_tc(struct ice_vsi *vsi, u8 ena_tc)
+@@ -3463,7 +3479,7 @@ void ice_vsi_cfg_netdev_tc(struct ice_vsi *vsi, u8 ena_tc)
   *
   * Prepares VSI tc_config to have queue configurations based on MQPRIO options.
   */
@@ -162,7 +160,7 @@ index 1edd9ecdc9ee..e51f44d71420 100644
  ice_vsi_setup_q_map_mqprio(struct ice_vsi *vsi, struct ice_vsi_ctx *ctxt,
  			   u8 ena_tc)
  {
-@@ -3514,7 +3530,18 @@ ice_vsi_setup_q_map_mqprio(struct ice_vsi *vsi, struct ice_vsi_ctx *ctxt,
+@@ -3512,7 +3528,18 @@ ice_vsi_setup_q_map_mqprio(struct ice_vsi *vsi, struct ice_vsi_ctx *ctxt,
  
  	/* Set actual Tx/Rx queue pairs */
  	vsi->num_txq = offset + qcount_tx;
@@ -181,7 +179,7 @@ index 1edd9ecdc9ee..e51f44d71420 100644
  
  	/* Setup queue TC[0].qmap for given VSI context */
  	ctxt->info.tc_mapping[0] = cpu_to_le16(qmap);
-@@ -3532,6 +3559,8 @@ ice_vsi_setup_q_map_mqprio(struct ice_vsi *vsi, struct ice_vsi_ctx *ctxt,
+@@ -3530,6 +3557,8 @@ ice_vsi_setup_q_map_mqprio(struct ice_vsi *vsi, struct ice_vsi_ctx *ctxt,
  	dev_dbg(ice_pf_to_dev(vsi->back), "vsi->num_rxq = %d\n",  vsi->num_rxq);
  	dev_dbg(ice_pf_to_dev(vsi->back), "all_numtc %u, all_enatc: 0x%04x, tc_cfg.numtc %u\n",
  		vsi->all_numtc, vsi->all_enatc, vsi->tc_cfg.numtc);
@@ -190,7 +188,7 @@ index 1edd9ecdc9ee..e51f44d71420 100644
  }
  
  /**
-@@ -3581,9 +3610,12 @@ int ice_vsi_cfg_tc(struct ice_vsi *vsi, u8 ena_tc)
+@@ -3579,9 +3608,12 @@ int ice_vsi_cfg_tc(struct ice_vsi *vsi, u8 ena_tc)
  
  	if (vsi->type == ICE_VSI_PF &&
  	    test_bit(ICE_FLAG_TC_MQPRIO, pf->flags))
@@ -206,5 +204,5 @@ index 1edd9ecdc9ee..e51f44d71420 100644
  	/* must to indicate which section of VSI context are being modified */
  	ctx->info.valid_sections = cpu_to_le16(ICE_AQ_VSI_PROP_RXQ_MAP_VALID);
 -- 
-2.34.1
+2.40.1
 

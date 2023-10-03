@@ -1,9 +1,7 @@
-From 2a246795169fc23181975f856e47a97ea164930f Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Wed, 15 Jun 2022 13:57:20 -0400
-Subject: [NET-NEXT 270/273] iavf: Fix missing state logs
-
+From ede54dfc062773b40c45f0004c5a0bc9e2f7120d Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
+Date: Wed, 15 Jun 2022 13:57:20 -0400
+Subject: [PATCH Mariner 2 300/304] iavf: Fix missing state logs
 
 [ Upstream commit d8fa2fd791a72087c1ce3336fbeefec4057c37c8 ]
 
@@ -44,5 +42,5 @@ index c90834cb1670..9c56d5b63a9f 100644
  		return "__IAVF_INIT_SW";
  	case __IAVF_INIT_FAILED:
 -- 
-2.34.1
+2.40.1
 
