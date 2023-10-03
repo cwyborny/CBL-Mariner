@@ -1,7 +1,7 @@
-From c517f5d50ce4fcbead8ad527b76a8407b0c5908d Mon Sep 17 00:00:00 2001
+From 5fea9043d9bb0578f04a276237bf8f07f837a73c Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 11:13:21 -0700
-Subject: [PATCH Mariner 2 259/285] ice: changes to the interface with the HW
+Subject: [PATCH Mariner 2 259/304] ice: changes to the interface with the HW
  and FW for SRIOV_VF+LAG
 
 Add defines needed for interaction with the FW admin queue interface

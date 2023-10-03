@@ -1,7 +1,7 @@
-From 8883c0465911ca0b6c7540d9bb740c668fe9cc2d Mon Sep 17 00:00:00 2001
+From 4d44cf866bc017089383a28f06aa3fcdb5649ea3 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 13:57:35 -0700
-Subject: [PATCH Mariner 2 261/285] ice: process events created by lag netdev
+Subject: [PATCH Mariner 2 261/304] ice: process events created by lag netdev
  event handler
 
 Add in the function framework for the processing of LAG events.  Also add

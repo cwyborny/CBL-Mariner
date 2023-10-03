@@ -1,7 +1,7 @@
-From a311cd730459e1ca537b536ce6def9ff58bf1327 Mon Sep 17 00:00:00 2001
+From fca88d48d9cc5388634f3ef6323294cbba3feb53 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Thu, 27 Jul 2023 10:35:39 +0200
-Subject: [PATCH Mariner 2 285/285] ice: Accept LAG netdevs in bridge offloads
+Subject: [PATCH Mariner 2 285/304] ice: Accept LAG netdevs in bridge offloads
 
 Backported from upstream commit 505a1fdadac1 ("ice: Accept LAG netdevs in
 bridge offloads").

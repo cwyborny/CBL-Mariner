@@ -1,7 +1,7 @@
-From fc24024dedad39c52013a79d30b43603404b2084 Mon Sep 17 00:00:00 2001
+From 107e2b3b4fabd570d6b725461cb421a604c96c38 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 20 Jun 2023 15:18:51 -0700
-Subject: [PATCH Mariner 2 263/285] ice: support non-standard teardown of bond
+Subject: [PATCH Mariner 2 263/304] ice: support non-standard teardown of bond
  interface
 
 Code for supporting removal of the PF driver (NETDEV_UNREGISTER) events for
@@ -17,7 +17,7 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
  1 file changed, 43 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 9bb76785171b..383c7830c4ee 100644
+index 285a6131a6ab..a331cf4a5143 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -1193,15 +1193,16 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)

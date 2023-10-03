@@ -1,7 +1,7 @@
-From 892623199bf895984498adf1577ac147dd3b6d2f Mon Sep 17 00:00:00 2001
+From cbaa50758f77d3d5a02b66786ad89f44b4543f11 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:31 +0200
-Subject: [PATCH Mariner 2 278/285] ice: Implement basic eswitch bridge setup
+Subject: [PATCH Mariner 2 278/304] ice: Implement basic eswitch bridge setup
 
 Backported from upstream commit f6e8fb55e5af ("ice: Implement basic
 eswitch bridge setup").

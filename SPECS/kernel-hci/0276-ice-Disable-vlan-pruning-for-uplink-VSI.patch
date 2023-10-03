@@ -1,7 +1,7 @@
-From d3a651ddcd41aa040fc72b230a8142fc66de041d Mon Sep 17 00:00:00 2001
+From 21d9b987a7aae9e3c36fd1572326138c03e3ffdb Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:29 +0200
-Subject: [PATCH Mariner 2 276/285] ice: Disable vlan pruning for uplink VSI
+Subject: [PATCH Mariner 2 276/304] ice: Disable vlan pruning for uplink VSI
 
 Backported from upstream commit 6ab1155798c3 ("ice: Disable vlan pruning
 for uplink VSI").

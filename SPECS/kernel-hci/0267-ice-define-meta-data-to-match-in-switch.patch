@@ -1,7 +1,7 @@
-From 7c3a553ab655cb81ee4c2ec1a3d482c25f75a1c9 Mon Sep 17 00:00:00 2001
+From db1af8f4e2d43bee72ae420bba676752af71f995 Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Fri, 7 Apr 2023 18:52:15 +0200
-Subject: [PATCH Mariner 2 267/285] ice: define meta data to match in switch
+Subject: [PATCH Mariner 2 267/304] ice: define meta data to match in switch
 
 Backported from upstream commit ecd01b69a5f8 ("ice: define meta data to
 match in switch").
