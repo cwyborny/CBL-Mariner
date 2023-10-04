@@ -1,9 +1,7 @@
-From 04e499293b0ac1f800422be15a2cb1f337260acf Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Thu, 7 Jul 2022 12:20:43 +0200
-Subject: [NET-NEXT 258/273] ice: do not setup vlan for loopback VSI
-
+From aeb4fe9b312084a67860b3fca3210f03dbe10c38 Mon Sep 17 00:00:00 2001
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Date: Thu, 7 Jul 2022 12:20:43 +0200
+Subject: [PATCH Mariner 2 289/304] ice: do not setup vlan for loopback VSI
 
 commit cc019545a238518fa9da1e2a889f6e1bb1005a63 upstream.
 
@@ -21,10 +19,10 @@ Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index dab4d8e4bd7e..30c279a06d41 100644
+index 8c046211ec76..b135356f7982 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5986,9 +5986,11 @@ int ice_vsi_cfg(struct ice_vsi *vsi)
+@@ -6013,9 +6013,11 @@ int ice_vsi_cfg(struct ice_vsi *vsi)
  	if (vsi->netdev && vsi->type == ICE_VSI_PF) {
  		ice_set_rx_mode(vsi->netdev);
  
@@ -40,5 +38,5 @@ index dab4d8e4bd7e..30c279a06d41 100644
  	ice_vsi_cfg_dcb_rings(vsi);
  
 -- 
-2.34.1
+2.40.1
 

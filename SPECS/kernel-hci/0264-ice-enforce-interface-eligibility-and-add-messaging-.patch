@@ -1,7 +1,7 @@
-From 3cdd4f9c6409e890c7e7ee3a9e167a28fb30b61f Mon Sep 17 00:00:00 2001
+From 2f3cd22e8e8f0d839b46dc0d71e839304b3066d9 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 20 Jun 2023 15:18:52 -0700
-Subject: [PATCH Mariner 2 264/285] ice: enforce interface eligibility and add
+Subject: [PATCH Mariner 2 264/304] ice: enforce interface eligibility and add
  messaging for SRIOV LAG
 
 Implement checks on what interfaces are eligible for supporting SRIOV VFs
@@ -23,11 +23,11 @@ Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
 Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 ---
- drivers/net/ethernet/intel/ice/ice_lag.c | 81 ++++++++++++++++++++++--
- 1 file changed, 76 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lag.c | 87 ++++++++++++++++++++++--
+ 1 file changed, 82 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 383c7830c4ee..6e87a62e9ba6 100644
+index a331cf4a5143..b831335c256a 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -892,6 +892,7 @@ static void ice_lag_link(struct ice_lag *lag)
@@ -118,7 +118,7 @@ index 383c7830c4ee..6e87a62e9ba6 100644
  			return false;
  		}
  	}
-@@ -1465,6 +1488,50 @@ ice_lag_monitor_rdma(struct ice_lag *lag, void *ptr)
+@@ -1465,6 +1488,56 @@ ice_lag_monitor_rdma(struct ice_lag *lag, void *ptr)
  		ice_set_rdma_cap(lag->pf);
  }
  
@@ -158,18 +158,24 @@ index 383c7830c4ee..6e87a62e9ba6 100644
 + */
 +static void ice_lag_disable_sriov_bond(struct ice_lag *lag)
 +{
++	struct ice_lag_netdev_list *entry;
 +	struct ice_netdev_priv *np;
++	struct net_device *netdev;
 +	struct ice_pf *pf;
 +
-+	np = netdev_priv(lag->netdev);
-+	pf = np->vsi->back;
-+	ice_clear_feature_support(pf, ICE_F_SRIOV_LAG);
++	list_for_each_entry(entry, lag->netdev_head, node) {
++		netdev = entry->netdev;
++		np = netdev_priv(netdev);
++		pf = np->vsi->back;
++
++		ice_clear_feature_support(pf, ICE_F_SRIOV_LAG);
++	}
 +}
 +
  /**
   * ice_lag_process_event - process a task assigned to the lag_wq
   * @work: pointer to work_struct
-@@ -1486,6 +1553,7 @@ static void ice_lag_process_event(struct work_struct *work)
+@@ -1486,6 +1559,7 @@ static void ice_lag_process_event(struct work_struct *work)
  	switch (lag_work->event) {
  	case NETDEV_CHANGEUPPER:
  		info = &lag_work->info.changeupper_info;
@@ -177,7 +183,7 @@ index 383c7830c4ee..6e87a62e9ba6 100644
  		if (ice_is_feature_supported(pf, ICE_F_SRIOV_LAG)) {
  			ice_lag_monitor_link(lag_work->lag, info);
  			ice_lag_changeupper_event(lag_work->lag, info);
-@@ -1497,6 +1565,9 @@ static void ice_lag_process_event(struct work_struct *work)
+@@ -1497,6 +1571,9 @@ static void ice_lag_process_event(struct work_struct *work)
  		if (ice_is_feature_supported(pf, ICE_F_SRIOV_LAG)) {
  			if (!ice_lag_chk_comp(lag_work->lag,
  					      &lag_work->info.bonding_info)) {

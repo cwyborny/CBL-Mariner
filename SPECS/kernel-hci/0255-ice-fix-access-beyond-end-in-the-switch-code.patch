@@ -1,7 +1,7 @@
-From 26af280c314b6396b9e5d05292b77b47cd13826d Mon Sep 17 00:00:00 2001
+From 231a0c93cab9eafac96b979e3cd2a85424f6c7e8 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Thu, 24 Aug 2023 10:48:14 -0700
-Subject: [PATCH Mariner 2 255/285] ice: fix access-beyond-end in the switch
+Subject: [PATCH Mariner 2 255/304] ice: fix access-beyond-end in the switch
  code
 
 commit 6e1ff618737a2ffa12191dcd99f83ef07fac2e45 upstream

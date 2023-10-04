@@ -1,9 +1,7 @@
-From fc28a1f80bb987efd211071437c7ed774da56b1d Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Fri, 10 Jun 2022 14:15:54 +0200
-Subject: [NET-NEXT 272/273] iavf: Fix VLAN_V2 addition/rejection
-
+From 1f020628b8915b9a854799a796bfe40208dc6a11 Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
+Date: Fri, 10 Jun 2022 14:15:54 +0200
+Subject: [PATCH Mariner 2 302/304] iavf: Fix VLAN_V2 addition/rejection
 
 [ Upstream commit 968996c070ef080ee7d6150faa98a4e562ce4625 ]
 
@@ -212,5 +210,5 @@ index 118b66a8a4d8..24f4dea9aee6 100644
  		/* PF enabled vlan strip on this VF.
  		 * Update netdev->features if needed to be in sync with ethtool.
 -- 
-2.34.1
+2.40.1
 

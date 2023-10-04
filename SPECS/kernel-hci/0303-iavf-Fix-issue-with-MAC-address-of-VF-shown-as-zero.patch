@@ -1,10 +1,8 @@
-From 36c8d7bded482893bedd8d7a68911cde89f3cd92 Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Fri, 20 May 2022 13:19:27 +0200
-Subject: [NET-NEXT 273/273] iavf: Fix issue with MAC address of VF shown as
- zero
-
+From 8e4061a37b73c881af827847e720846b94e37b23 Mon Sep 17 00:00:00 2001
 From: Michal Wilczynski <michal.wilczynski@intel.com>
+Date: Fri, 20 May 2022 13:19:27 +0200
+Subject: [PATCH Mariner 2 303/304] iavf: Fix issue with MAC address of VF
+ shown as zero
 
 [ Upstream commit 645603844270b69175899268be68b871295764fe ]
 
@@ -52,5 +50,5 @@ index 925649068ca9..ef62d8b511a8 100644
  	} else {
  		f->remove = false;
 -- 
-2.34.1
+2.40.1
 

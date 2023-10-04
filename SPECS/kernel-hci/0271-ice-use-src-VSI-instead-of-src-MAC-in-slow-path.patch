@@ -1,7 +1,7 @@
-From 0a553f4c629b2cb65f95aaaec2ecaac802540ec3 Mon Sep 17 00:00:00 2001
+From 74aa01b1192539ebad4ab7b982b6bc0003d34307 Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Date: Fri, 7 Apr 2023 18:52:19 +0200
-Subject: [PATCH Mariner 2 271/285] ice: use src VSI instead of src MAC in
+Subject: [PATCH Mariner 2 271/304] ice: use src VSI instead of src MAC in
  slow-path
 
 Backported from upstream commit 0ef4479d13af ("ice: use src VSI instead of

@@ -1,7 +1,7 @@
-From 83be15fe56c509d3c6e183f77033cdb8ade68b5f Mon Sep 17 00:00:00 2001
+From 5f7bc224a4d01bc263c5503d69dab89a94f66bc8 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:30 +0200
-Subject: [PATCH Mariner 2 277/285] ice: Unset src prune on uplink VSI
+Subject: [PATCH Mariner 2 277/304] ice: Unset src prune on uplink VSI
 
 Backported from upstream commit 6c0f4441d83b ("ice: Unset src prune on
 uplink VSI").

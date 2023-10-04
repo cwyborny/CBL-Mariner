@@ -1,9 +1,7 @@
-From 1169962d9292ce7ecc7326c50fd7f972a9a051b9 Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Thu, 21 Jul 2022 10:03:09 +0200
-Subject: [NET-NEXT 257/273] ice: Fix VSIs unable to share unicast MAC
-
+From 717aebeff4e12a464197f2a3067e3bb87a4d3dac Mon Sep 17 00:00:00 2001
 From: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
+Date: Thu, 21 Jul 2022 10:03:09 +0200
+Subject: [PATCH Mariner 2 288/304] ice: Fix VSIs unable to share unicast MAC
 
 commit 5c8e3c7ff3e7bd7b938659be704f75cc746b697f upstream.
 
@@ -36,10 +34,10 @@ Signed-off-by: Carolyn Wyborny <carolyn.wyborny@intel.com>
  2 files changed, 2 insertions(+), 40 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index af1aba372d86..dab4d8e4bd7e 100644
+index 290fd75a94c2..8c046211ec76 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4644,6 +4644,8 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
+@@ -4657,6 +4657,8 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
  		ice_set_safe_mode_caps(hw);
  	}
  
@@ -49,10 +47,10 @@ index af1aba372d86..dab4d8e4bd7e 100644
  	if (err) {
  		dev_err(dev, "ice_init_pf failed: %d\n", err);
 diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index e9bfcdf3c1c4..0c8e0689fc18 100644
+index 4d4a04d4169d..cc223a6c1d49 100644
 --- a/drivers/net/ethernet/intel/ice/ice_sriov.c
 +++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -1291,39 +1291,6 @@ ice_get_vf_cfg(struct net_device *netdev, int vf_id, struct ifla_vf_info *ivi)
+@@ -1287,39 +1287,6 @@ ice_get_vf_cfg(struct net_device *netdev, int vf_id, struct ifla_vf_info *ivi)
  	return ret;
  }
  
@@ -92,7 +90,7 @@ index e9bfcdf3c1c4..0c8e0689fc18 100644
  /**
   * ice_set_vf_mac
   * @netdev: network interface device structure
-@@ -1358,13 +1325,6 @@ int ice_set_vf_mac(struct net_device *netdev, int vf_id, u8 *mac)
+@@ -1354,13 +1321,6 @@ int ice_set_vf_mac(struct net_device *netdev, int vf_id, u8 *mac)
  	if (ret)
  		goto out_put_vf;
  
@@ -107,5 +105,5 @@ index e9bfcdf3c1c4..0c8e0689fc18 100644
  
  	/* VF is notified of its new MAC via the PF's response to the
 -- 
-2.34.1
+2.40.1
 

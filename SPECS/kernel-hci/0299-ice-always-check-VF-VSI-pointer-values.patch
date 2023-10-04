@@ -1,9 +1,7 @@
-From 6b9d06724038088f56a01bede418ed1a188b7a42 Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Mon, 11 Apr 2022 16:29:03 -0700
-Subject: [NET-NEXT 269/273] ice: always check VF VSI pointer values
-
+From 3ea679010bd51a5ad2cbf5f4b71740024581786d Mon Sep 17 00:00:00 2001
 From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Mon, 11 Apr 2022 16:29:03 -0700
+Subject: [PATCH Mariner 2 299/304] ice: always check VF VSI pointer values
 
 [ Upstream commit baeb705fd6a7245cc1fa69ed991a9cffdf44a174 ]
 
@@ -51,7 +49,7 @@ index 7bb5787f4e0b..a6cd07df8643 100644
  	attrs.pci_vf.pf = pf->hw.bus.func;
  	attrs.pci_vf.vf = vf->vf_id;
 diff --git a/drivers/net/ethernet/intel/ice/ice_repr.c b/drivers/net/ethernet/intel/ice/ice_repr.c
-index 848f2adea563..a91b81c3088b 100644
+index a24b41913adf..477fe9df2edc 100644
 --- a/drivers/net/ethernet/intel/ice/ice_repr.c
 +++ b/drivers/net/ethernet/intel/ice/ice_repr.c
 @@ -293,8 +293,13 @@ static int ice_repr_add(struct ice_vf *vf)
@@ -68,7 +66,7 @@ index 848f2adea563..a91b81c3088b 100644
  	repr = kzalloc(sizeof(*repr), GFP_KERNEL);
  	if (!repr)
  		return -ENOMEM;
-@@ -313,7 +318,7 @@ static int ice_repr_add(struct ice_vf *vf)
+@@ -305,7 +310,7 @@ static int ice_repr_add(struct ice_vf *vf)
  		goto err_alloc;
  	}
  
@@ -78,7 +76,7 @@ index 848f2adea563..a91b81c3088b 100644
  	vf->repr = repr;
  	np = netdev_priv(repr->netdev);
 diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index 0c8e0689fc18..11fd46a0d641 100644
+index cc223a6c1d49..4d0bf31906aa 100644
 --- a/drivers/net/ethernet/intel/ice/ice_sriov.c
 +++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
 @@ -46,7 +46,12 @@ static void ice_free_vf_entries(struct ice_pf *pf)
@@ -124,7 +122,7 @@ index 0c8e0689fc18..11fd46a0d641 100644
  	ice_ena_vf_msix_mappings(vf);
  	ice_ena_vf_q_mappings(vf, vsi->alloc_txq, vsi->alloc_rxq);
  }
-@@ -1127,6 +1140,8 @@ static struct ice_vf *ice_get_vf_from_pfq(struct ice_pf *pf, u16 pfq)
+@@ -1123,6 +1136,8 @@ static struct ice_vf *ice_get_vf_from_pfq(struct ice_pf *pf, u16 pfq)
  		u16 rxq_idx;
  
  		vsi = ice_get_vf_vsi(vf);
@@ -133,7 +131,7 @@ index 0c8e0689fc18..11fd46a0d641 100644
  
  		ice_for_each_rxq(vsi, rxq_idx)
  			if (vsi->rxq_map[rxq_idx] == pfq) {
-@@ -1478,8 +1493,15 @@ static int ice_calc_all_vfs_min_tx_rate(struct ice_pf *pf)
+@@ -1474,8 +1489,15 @@ static int ice_calc_all_vfs_min_tx_rate(struct ice_pf *pf)
  static bool
  ice_min_tx_rate_oversubscribed(struct ice_vf *vf, int min_tx_rate)
  {
@@ -151,7 +149,7 @@ index 0c8e0689fc18..11fd46a0d641 100644
  
  	/* this VF's previous rate is being overwritten */
  	all_vfs_min_tx_rate -= vf->min_tx_rate;
-@@ -1523,6 +1545,10 @@ ice_set_vf_bw(struct net_device *netdev, int vf_id, int min_tx_rate,
+@@ -1519,6 +1541,10 @@ ice_set_vf_bw(struct net_device *netdev, int vf_id, int min_tx_rate,
  		goto out_put_vf;
  
  	vsi = ice_get_vf_vsi(vf);
@@ -163,7 +161,7 @@ index 0c8e0689fc18..11fd46a0d641 100644
  	/* when max_tx_rate is zero that means no max Tx rate limiting, so only
  	 * check if max_tx_rate is non-zero
 diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 4e4c31fabef4..9790df872c2a 100644
+index b346a537386c..5b646b5c2fdb 100644
 --- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
 @@ -220,8 +220,10 @@ static void ice_vf_clear_counters(struct ice_vf *vf)
@@ -199,7 +197,7 @@ index 4e4c31fabef4..9790df872c2a 100644
  
  	ice_dis_vf_qs(vf);
  
-@@ -577,6 +586,11 @@ int ice_reset_vf(struct ice_vf *vf, u32 flags)
+@@ -575,6 +584,11 @@ int ice_reset_vf(struct ice_vf *vf, u32 flags)
  
  	vf->vf_ops->post_vsi_rebuild(vf);
  	vsi = ice_get_vf_vsi(vf);
@@ -209,9 +207,9 @@ index 4e4c31fabef4..9790df872c2a 100644
 +	}
 +
  	ice_eswitch_update_repr(vsi);
- 	ice_eswitch_replay_vf_mac_rule(vf);
  
-@@ -615,6 +629,9 @@ void ice_dis_vf_qs(struct ice_vf *vf)
+ 	/* if the VF has been reset allow it to come up again */
+@@ -612,6 +626,9 @@ void ice_dis_vf_qs(struct ice_vf *vf)
  {
  	struct ice_vsi *vsi = ice_get_vf_vsi(vf);
  
@@ -221,7 +219,7 @@ index 4e4c31fabef4..9790df872c2a 100644
  	ice_vsi_stop_lan_tx_rings(vsi, ICE_NO_RESET, vf->vf_id);
  	ice_vsi_stop_all_rx_rings(vsi);
  	ice_set_vf_state_qs_dis(vf);
-@@ -795,6 +812,9 @@ static int ice_vf_rebuild_host_mac_cfg(struct ice_vf *vf)
+@@ -792,6 +809,9 @@ static int ice_vf_rebuild_host_mac_cfg(struct ice_vf *vf)
  	u8 broadcast[ETH_ALEN];
  	int status;
  
@@ -231,7 +229,7 @@ index 4e4c31fabef4..9790df872c2a 100644
  	if (ice_is_eswitch_mode_switchdev(vf->pf))
  		return 0;
  
-@@ -880,6 +900,9 @@ static int ice_vf_rebuild_host_tx_rate_cfg(struct ice_vf *vf)
+@@ -877,6 +897,9 @@ static int ice_vf_rebuild_host_tx_rate_cfg(struct ice_vf *vf)
  	struct ice_vsi *vsi = ice_get_vf_vsi(vf);
  	int err;
  
@@ -241,7 +239,7 @@ index 4e4c31fabef4..9790df872c2a 100644
  	if (vf->min_tx_rate) {
  		err = ice_set_min_bw_limit(vsi, (u64)vf->min_tx_rate * 1000);
  		if (err) {
-@@ -943,6 +966,9 @@ void ice_vf_rebuild_host_cfg(struct ice_vf *vf)
+@@ -940,6 +963,9 @@ void ice_vf_rebuild_host_cfg(struct ice_vf *vf)
  	struct device *dev = ice_pf_to_dev(vf->pf);
  	struct ice_vsi *vsi = ice_get_vf_vsi(vf);
  
@@ -252,10 +250,10 @@ index 4e4c31fabef4..9790df872c2a 100644
  
  	if (ice_vf_rebuild_host_mac_cfg(vf))
 diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-index 4ed5c250c466..3143c2abf775 100644
+index d870087527dd..82b23104fa29 100644
 --- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
 +++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -2391,6 +2391,11 @@ static int ice_vc_ena_vlan_stripping(struct ice_vf *vf)
+@@ -2394,6 +2394,11 @@ static int ice_vc_ena_vlan_stripping(struct ice_vf *vf)
  	}
  
  	vsi = ice_get_vf_vsi(vf);
@@ -286,5 +284,5 @@ index da2621a1d82d..5f963453a038 100644
  
  	fd_size = rd32(hw, VSIQF_FD_SIZE(vsi_num));
 -- 
-2.34.1
+2.40.1
 

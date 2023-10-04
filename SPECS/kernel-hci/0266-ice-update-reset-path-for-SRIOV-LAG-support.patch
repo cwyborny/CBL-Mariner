@@ -1,7 +1,7 @@
-From 0e62ba754d29a68855c016ac403f2344918b32c6 Mon Sep 17 00:00:00 2001
+From 22d916fc8491af0a6122bbfa79abc61d9953f103 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 20 Jun 2023 15:18:54 -0700
-Subject: [PATCH Mariner 2 266/285] ice: update reset path for SRIOV LAG
+Subject: [PATCH Mariner 2 266/304] ice: update reset path for SRIOV LAG
  support
 
 Add code to rebuild the LAG resources when rebuilding the state of the
@@ -24,7 +24,7 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
  3 files changed, 244 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 6e87a62e9ba6..4ca21199e69c 100644
+index b831335c256a..935ab5c29f1f 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -964,6 +964,7 @@ static void ice_lag_link_unlink(struct ice_lag *lag, void *ptr)
@@ -75,7 +75,7 @@ index 6e87a62e9ba6..4ca21199e69c 100644
   * @link: is this a linking activity
   *
   * Implement setting primary SWID as shared using 0x020B
-@@ -1768,6 +1782,135 @@ static int ice_create_lag_recipe(struct ice_hw *hw, u16 *rid,
+@@ -1774,6 +1788,135 @@ static int ice_create_lag_recipe(struct ice_hw *hw, u16 *rid,
  	return err;
  }
  
@@ -211,7 +211,7 @@ index 6e87a62e9ba6..4ca21199e69c 100644
  /**
   * ice_init_lag - initialize support for LAG
   * @pf: PF struct
-@@ -1869,3 +2012,85 @@ void ice_deinit_lag(struct ice_pf *pf)
+@@ -1875,3 +2018,85 @@ void ice_deinit_lag(struct ice_pf *pf)
  
  	pf->lag = NULL;
  }

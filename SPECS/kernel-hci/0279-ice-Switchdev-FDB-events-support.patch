@@ -1,7 +1,7 @@
-From ed875737df7896fcbe435dbaaf43cd29c4579870 Mon Sep 17 00:00:00 2001
+From 360375080543e1c0d705097b65f9ba21945acd36 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Wed, 12 Jul 2023 13:03:32 +0200
-Subject: [PATCH Mariner 2 279/285] ice: Switchdev FDB events support
+Subject: [PATCH Mariner 2 279/304] ice: Switchdev FDB events support
 
 Backported from upstream commit 7c945a1a8e5f ("ice: Switchdev FDB events
 support").

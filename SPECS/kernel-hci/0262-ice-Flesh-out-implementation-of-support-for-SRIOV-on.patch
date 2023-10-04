@@ -1,7 +1,7 @@
-From 34507bf59865c4210ee0facc5579739a24eb7c56 Mon Sep 17 00:00:00 2001
+From e852962708c9789a3160a0bc4a9b474bf7794f31 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Wed, 23 Aug 2023 15:02:59 -0700
-Subject: [PATCH Mariner 2 262/285] ice: Flesh out implementation of support
+Subject: [PATCH Mariner 2 262/304] ice: Flesh out implementation of support
  for SRIOV on bonded interface
 
 Add in the functions that will allow a VF created on the primary interface
@@ -22,7 +22,7 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
  4 files changed, 822 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 4e49420771db..9bb76785171b 100644
+index 4e49420771db..285a6131a6ab 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -10,6 +10,11 @@
@@ -928,8 +928,7 @@ index 4e49420771db..9bb76785171b 100644
 +	new_rcp = kzalloc(ICE_RECIPE_LEN * ICE_MAX_NUM_RECIPES, GFP_KERNEL);
 +	if (!new_rcp)
 +		return -ENOMEM;
- 
--	return rid;
++
 +	memcpy(new_rcp, base_recipe, ICE_RECIPE_LEN);
 +	new_rcp->content.act_ctrl_fwd_priority = prio;
 +	new_rcp->content.rid = *rid | ICE_AQ_RECIPE_ID_IS_ROOT;
@@ -937,7 +936,8 @@ index 4e49420771db..9bb76785171b 100644
 +	bitmap_zero((unsigned long *)new_rcp->recipe_bitmap,
 +		    ICE_MAX_NUM_RECIPES);
 +	set_bit(*rid, (unsigned long *)new_rcp->recipe_bitmap);
-+ 
+ 
+-	return rid;
 +	err = ice_aq_add_recipe(hw, new_rcp, 1, NULL);
 +	if (err)
 +		*rid = 0;
