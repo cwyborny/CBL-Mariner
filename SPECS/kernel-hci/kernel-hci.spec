@@ -332,6 +332,7 @@ Patch301:	0302-iavf-Fix-VLAN_V2-addition-rejection.patch
 Patch302:	0303-iavf-Fix-issue-with-MAC-address-of-VF-shown-as-zero.patch
 Patch303:	0304-ice-Fix-SRIOV-LAG-disable-on-non-compliant-aggreagat.patch
 Patch304:	0305-ice-block-default-rule-setting-on-LAG-interface.patch
+Patch305:	0306-ice-Fix-VF-Reset-when-interface-in-a-failed-over-agg.patch
 BuildRequires:  audit-devel
 BuildRequires:  bash
 BuildRequires:  bc
