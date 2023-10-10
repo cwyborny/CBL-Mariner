@@ -330,6 +330,8 @@ Patch299:	0300-iavf-Fix-missing-state-logs.patch
 Patch300:	0301-iavf-Disallow-changing-rx-tx-frames-and-rx-tx-frames.patch
 Patch301:	0302-iavf-Fix-VLAN_V2-addition-rejection.patch
 Patch302:	0303-iavf-Fix-issue-with-MAC-address-of-VF-shown-as-zero.patch
+Patch303:	0304-ice-Fix-SRIOV-LAG-disable-on-non-compliant-aggreagat.patch
+Patch304:	0305-ice-block-default-rule-setting-on-LAG-interface.patch
 BuildRequires:  audit-devel
 BuildRequires:  bash
 BuildRequires:  bc
