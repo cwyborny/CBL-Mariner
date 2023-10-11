@@ -187,7 +187,7 @@ Patch156:	0157-ice-Use-the-proto-argument-for-VLAN-ops.patch
 Patch157:	0158-ice-Adjust-naming-for-inner-VLAN-operations.patch         
 Patch158:	0159-ice-Add-outer_vlan_ops-and-VSI-specific-VLAN-ops-imp.patch
 Patch159:	0160-ice-Add-hot-path-support-for-802.1Q-and-802.1ad-VLAN.patch
-Patch160:	0161-virtchnl-Use-the-BIT-macro-for-capability-offload-fl.patchh
+Patch160:	0161-virtchnl-Use-the-BIT-macro-for-capability-offload-fl.patch
 Patch161:	0162-virtchnl-Add-support-for-new-VLAN-capabilities.patch      
 Patch162:	0163-ice-Add-support-for-VIRTCHNL_VF_OFFLOAD_VLAN_V2.patch     
 Patch163:	0164-ice-Support-configuring-the-device-to-Double-VLAN-Mo.patch
@@ -313,7 +313,7 @@ Patch282:	0283-ice-implement-static-version-of-ageing.patch
 Patch283:	0284-ice-add-tracepoints-for-the-switchdev-bridge.patch
 Patch284:	0285-ice-Accept-LAG-netdevs-in-bridge-offloads.patch
 Patch285:	0286-net-ice-fix-initializing-the-bitmap-in-the-switch-co.patch
-Patch286:	0287-net-ice-fix-error-NETIF_F_HW_VLAN_CTAG_FILTER-check-.patch
+Patch286:	0287-net-ice-fix-error-NETIF_F_HW_VLAN_CTAG_FILTER-check.patch
 Patch287:	0288-ice-Fix-VSIs-unable-to-share-unicast-MAC.patch
 Patch288:	0289-ice-do-not-setup-vlan-for-loopback-VSI.patch
 Patch289:	0290-ice-Fix-max-VLANs-available-for-VF.patch
@@ -699,8 +699,6 @@ manipulation of eBPF programs and maps.
 %patch251 -p1
 %patch252 -p1
 %patch253 -p1
-<<<<<<< HEAD
-=======
 %patch254 -p1
 %patch255 -p1
 %patch256 -p1
@@ -719,7 +717,6 @@ manipulation of eBPF programs and maps.
 %patch269 -p1
 %patch270 -p1
 %patch271 -p1
->>>>>>> d4a2523d4 (kernel-hci: Add patches and changes for E800 device support)
 	  
 make mrproper
 	  
@@ -988,12 +985,6 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 * Wed Jun 28 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.118.1-1
 - Auto-upgrade to 5.15.118.1
 
-<<<<<<< HEAD
->>>>>>> d39240a8c (Kernel upgrade to 5.15.126.1 version (#5991))
-=======
-=======
->>>>>>> 0fc2721ca (kernel-hci: Add patches and changes for E800 device support)
->>>>>>> d4a2523d4 (kernel-hci: Add patches and changes for E800 device support)
 * Tue Jun 13 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.116.1-1
 - Auto-upgrade to 5.15.116.1
 
