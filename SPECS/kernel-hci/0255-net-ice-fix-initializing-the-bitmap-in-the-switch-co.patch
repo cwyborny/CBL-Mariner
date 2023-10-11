@@ -1,7 +1,7 @@
 From 72580692b6294cbc312d3210eb23b6801ded1bf2 Mon Sep 17 00:00:00 2001
 From: Alexander Lobakin <alexandr.lobakin@intel.com>
 Date: Fri, 24 Jun 2022 14:13:11 +0200
-Subject: [PATCH Mariner 2 286/304] net/ice: fix initializing the bitmap in the
+Subject: [PATCH Mariner 2 255/304] net/ice: fix initializing the bitmap in the
  switch code
 
 [ Upstream commit 2f7ee2a72ccec8b85a05c4644d7ec9f40c1c50c8 ]

@@ -1,7 +1,7 @@
 From aeb4fe9b312084a67860b3fca3210f03dbe10c38 Mon Sep 17 00:00:00 2001
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Date: Thu, 7 Jul 2022 12:20:43 +0200
-Subject: [PATCH Mariner 2 289/304] ice: do not setup vlan for loopback VSI
+Subject: [PATCH Mariner 2 258/304] ice: do not setup vlan for loopback VSI
 
 commit cc019545a238518fa9da1e2a889f6e1bb1005a63 upstream.
 

@@ -1,7 +1,7 @@
 From 6313c2f1281cf0669143fc1ec1eb04e11243ca2c Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
 Date: Mon, 13 Jun 2022 19:07:42 -0400
-Subject: [PATCH Mariner 2 301/304] iavf: Disallow changing rx/tx-frames and
+Subject: [PATCH Mariner 2 270/304] iavf: Disallow changing rx/tx-frames and
  rx/tx-frames-irq
 
 [ Upstream commit 4635fd3a9d77581498f34ab9a7e4bcc211bf0a4c ]

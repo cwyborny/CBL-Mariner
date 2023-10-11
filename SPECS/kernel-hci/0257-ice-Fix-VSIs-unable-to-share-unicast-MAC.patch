@@ -1,7 +1,7 @@
 From 717aebeff4e12a464197f2a3067e3bb87a4d3dac Mon Sep 17 00:00:00 2001
 From: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
 Date: Thu, 21 Jul 2022 10:03:09 +0200
-Subject: [PATCH Mariner 2 288/304] ice: Fix VSIs unable to share unicast MAC
+Subject: [PATCH Mariner 2 257/304] ice: Fix VSIs unable to share unicast MAC
 
 commit 5c8e3c7ff3e7bd7b938659be704f75cc746b697f upstream.
 

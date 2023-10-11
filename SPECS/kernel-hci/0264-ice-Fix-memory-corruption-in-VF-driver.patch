@@ -1,7 +1,7 @@
 From 89003f9ef597ac3dcbdd55bc16811f7e69622cf9 Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
 Date: Thu, 2 Jun 2022 12:09:17 +0200
-Subject: [PATCH Mariner 2 295/304] ice: Fix memory corruption in VF driver
+Subject: [PATCH Mariner 2 264/304] ice: Fix memory corruption in VF driver
 
 [ Upstream commit efe41860008e57fb6b69855b4b93fdf34bc42798 ]
 

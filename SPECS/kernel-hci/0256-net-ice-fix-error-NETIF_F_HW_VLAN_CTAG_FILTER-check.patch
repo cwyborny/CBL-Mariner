@@ -1,7 +1,7 @@
 From 7443cfb06cc02b4175dcefc1ee4cb385612ca237 Mon Sep 17 00:00:00 2001
 From: Carolyn Wyborny <carolyn.wyborny@intel.com>
 Date: Fri, 29 Jul 2022 18:17:54 +0800
-Subject: [NET-NEXT 256/273] net: ice: fix error NETIF_F_HW_VLAN_CTAG_FILTER
+Subject: [NET-NEXT 256/304] net: ice: fix error NETIF_F_HW_VLAN_CTAG_FILTER
  check in ice_vsi_sync_fltr()
 
 From: Jian Shen <shenjian15@huawei.com>

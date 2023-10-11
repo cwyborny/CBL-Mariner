@@ -1,7 +1,7 @@
 From 1f020628b8915b9a854799a796bfe40208dc6a11 Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
 Date: Fri, 10 Jun 2022 14:15:54 +0200
-Subject: [PATCH Mariner 2 302/304] iavf: Fix VLAN_V2 addition/rejection
+Subject: [PATCH Mariner 2 271/304] iavf: Fix VLAN_V2 addition/rejection
 
 [ Upstream commit 968996c070ef080ee7d6150faa98a4e562ce4625 ]
 

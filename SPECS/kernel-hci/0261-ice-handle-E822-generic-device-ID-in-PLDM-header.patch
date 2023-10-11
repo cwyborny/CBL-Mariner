@@ -1,7 +1,7 @@
 From 8627c27857e27ceb426237513d61fddc9d9a4d61 Mon Sep 17 00:00:00 2001
 From: Paul M Stillwell Jr <paul.m.stillwell.jr@intel.com>
 Date: Wed, 8 Jun 2022 14:09:52 -0700
-Subject: [PATCH Mariner 2 292/304] ice: handle E822 generic device ID in PLDM
+Subject: [PATCH Mariner 2 261/304] ice: handle E822 generic device ID in PLDM
  header
 
 [ Upstream commit f52d166819a4d8e0d5cca07d8a8dd6397c96dcf1 ]

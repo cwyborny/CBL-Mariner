@@ -1,7 +1,7 @@
 From 3797d79df67a43fdee99f83917ce92c5b95cf964 Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
 Date: Mon, 4 Jul 2022 15:46:12 +0200
-Subject: [PATCH Mariner 2 290/304] ice: Fix max VLANs available for VF
+Subject: [PATCH Mariner 2 259/304] ice: Fix max VLANs available for VF
 
 commit 1e308c6fb7127371f48a0fb9770ea0b30a6b5698 upstream.
 

@@ -1,7 +1,7 @@
 From 8e4061a37b73c881af827847e720846b94e37b23 Mon Sep 17 00:00:00 2001
 From: Michal Wilczynski <michal.wilczynski@intel.com>
 Date: Fri, 20 May 2022 13:19:27 +0200
-Subject: [PATCH Mariner 2 303/304] iavf: Fix issue with MAC address of VF
+Subject: [PATCH Mariner 2 272/304] iavf: Fix issue with MAC address of VF
  shown as zero
 
 [ Upstream commit 645603844270b69175899268be68b871295764fe ]

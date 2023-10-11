@@ -1,7 +1,7 @@
 From 55883727628f2f33cd66c9e6581deee199121e6b Mon Sep 17 00:00:00 2001
 From: Michal Michalik <michal.michalik@intel.com>
 Date: Tue, 10 May 2022 13:03:43 +0200
-Subject: [PATCH Mariner 2 298/304] ice: Fix PTP TX timestamp offset
+Subject: [PATCH Mariner 2 267/304] ice: Fix PTP TX timestamp offset
  calculation
 
 [ Upstream commit 71a579f0d3777a704355e6f1572dfba92a9b58b2 ]

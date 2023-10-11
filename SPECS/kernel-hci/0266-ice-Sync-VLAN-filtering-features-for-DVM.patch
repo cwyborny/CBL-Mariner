@@ -1,7 +1,7 @@
 From 4fd8301527679ae945d432720a59eef210c156b3 Mon Sep 17 00:00:00 2001
 From: Roman Storozhenko <roman.storozhenko@intel.com>
 Date: Tue, 7 Jun 2022 08:54:57 +0200
-Subject: [PATCH Mariner 2 297/304] ice: Sync VLAN filtering features for DVM
+Subject: [PATCH Mariner 2 266/304] ice: Sync VLAN filtering features for DVM
 
 [ Upstream commit 9542ef4fba8c73e176b8aa18a8adf04aecb889e5 ]
 

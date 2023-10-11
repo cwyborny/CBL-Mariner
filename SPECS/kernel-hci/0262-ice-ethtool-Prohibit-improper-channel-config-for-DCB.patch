@@ -1,7 +1,7 @@
 From f944ab07b51d5c16d4cd5d8613bfe8f013115d6a Mon Sep 17 00:00:00 2001
 From: Anatolii Gerasymenko <anatolii.gerasymenko@intel.com>
 Date: Mon, 6 Jun 2022 09:01:21 +0200
-Subject: [PATCH Mariner 2 293/304] ice: ethtool: Prohibit improper channel
+Subject: [PATCH Mariner 2 262/304] ice: ethtool: Prohibit improper channel
  config for DCB
 
 [ Upstream commit a632b2a4c920ce5af29410fb091f7ee6d2e77dc6 ]

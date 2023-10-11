@@ -1,7 +1,7 @@
 From 3ea679010bd51a5ad2cbf5f4b71740024581786d Mon Sep 17 00:00:00 2001
 From: Jacob Keller <jacob.e.keller@intel.com>
 Date: Mon, 11 Apr 2022 16:29:03 -0700
-Subject: [PATCH Mariner 2 299/304] ice: always check VF VSI pointer values
+Subject: [PATCH Mariner 2 268/304] ice: always check VF VSI pointer values
 
 [ Upstream commit baeb705fd6a7245cc1fa69ed991a9cffdf44a174 ]
 

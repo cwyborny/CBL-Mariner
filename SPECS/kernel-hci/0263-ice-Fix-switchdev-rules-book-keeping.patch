@@ -1,7 +1,7 @@
 From 1bdf5a669b8cf5447cd7d2d5fa223621bce597a1 Mon Sep 17 00:00:00 2001
 From: Wojciech Drewek <wojciech.drewek@intel.com>
 Date: Mon, 23 May 2022 11:41:55 +0200
-Subject: [PATCH Mariner 2 294/304] ice: Fix switchdev rules book keeping
+Subject: [PATCH Mariner 2 263/304] ice: Fix switchdev rules book keeping
 
 [ Upstream commit 3578dc90013b1fa20da996cdadd8515802716132 ]
 

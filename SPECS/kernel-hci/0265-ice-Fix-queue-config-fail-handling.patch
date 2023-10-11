@@ -1,7 +1,7 @@
 From 42d5e44cf81c5cafddb24bd67461df6689f6a572 Mon Sep 17 00:00:00 2001
 From: Przemyslaw Patynowski <przemyslawx.patynowski@intel.com>
 Date: Thu, 2 Jun 2022 12:09:04 +0200
-Subject: [PATCH Mariner 2 296/304] ice: Fix queue config fail handling
+Subject: [PATCH Mariner 2 265/304] ice: Fix queue config fail handling
 
 [ Upstream commit be2af71496a54a7195ac62caba6fab49cfe5006c ]
 
