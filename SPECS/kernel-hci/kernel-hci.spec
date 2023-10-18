@@ -333,6 +333,7 @@ Patch302:	0303-iavf-Fix-issue-with-MAC-address-of-VF-shown-as-zero.patch
 Patch303:	0304-ice-Fix-SRIOV-LAG-disable-on-non-compliant-aggreagat.patch
 Patch304:	0305-ice-block-default-rule-setting-on-LAG-interface.patch
 Patch305:	0306-ice-Fix-VF-Reset-when-interface-in-a-failed-over-agg.patch
+Patch306:	0307-ice-add-drop-rule-matching-on-not-active-lport.patch
 BuildRequires:  audit-devel
 BuildRequires:  bash
 BuildRequires:  bc
@@ -702,8 +703,6 @@ manipulation of eBPF programs and maps.
 %patch251 -p1
 %patch252 -p1
 %patch253 -p1
-<<<<<<< HEAD
-=======
 %patch254 -p1
 %patch255 -p1
 %patch256 -p1
@@ -722,7 +721,41 @@ manipulation of eBPF programs and maps.
 %patch269 -p1
 %patch270 -p1
 %patch271 -p1
->>>>>>> d4a2523d4 (kernel-hci: Add patches and changes for E800 device support)
+%patch272 -p1
+%patch273 -p1
+%patch274 -p1
+%patch275 -p1
+%patch276 -p1
+%patch277 -p1
+%patch278 -p1
+%patch279 -p1
+%patch280 -p1
+%patch281 -p1
+%patch282 -p1
+%patch283 -p1
+%patch284 -p1
+%patch285 -p1
+%patch286 -p1
+%patch287 -p1
+%patch288 -p1
+%patch289 -p1
+%patch290 -p1
+%patch291 -p1
+%patch292 -p1
+%patch293 -p1
+%patch294 -p1
+%patch295 -p1
+%patch296 -p1
+%patch297 -p1
+%patch298 -p1
+%patch299 -p1
+%patch300 -p1
+%patch301 -p1
+%patch302 -p1
+%patch303 -p1
+%patch304 -p1
+%patch305 -p1
+%patch306 -p1
 	  
 make mrproper
 	  
@@ -991,12 +1024,6 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 * Wed Jun 28 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.118.1-1
 - Auto-upgrade to 5.15.118.1
 
-<<<<<<< HEAD
->>>>>>> d39240a8c (Kernel upgrade to 5.15.126.1 version (#5991))
-=======
-=======
->>>>>>> 0fc2721ca (kernel-hci: Add patches and changes for E800 device support)
->>>>>>> d4a2523d4 (kernel-hci: Add patches and changes for E800 device support)
 * Tue Jun 13 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.116.1-1
 - Auto-upgrade to 5.15.116.1
 
