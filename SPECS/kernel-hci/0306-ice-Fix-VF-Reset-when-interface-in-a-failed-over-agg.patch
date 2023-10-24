@@ -1,4 +1,4 @@
-From 5d867d2f63f04e428a6f95b96c6d68014a34e95f Mon Sep 17 00:00:00 2001
+From 34e314739b9d45430605261de71ed6306c9619b3 Mon Sep 17 00:00:00 2001
 From: Dave Ertman <david.m.ertman@intel.com>
 Date: Tue, 10 Oct 2023 12:55:48 -0700
 Subject: [PATCH Mariner] ice: Fix VF Reset when interface in a failed over
@@ -49,7 +49,7 @@ index 80b2f1f865e9..4eb81eee84d9 100644
 +void ice_lag_move_vf_nodes(struct ice_lag *lag, u8 oldport, u8 newport);
  #endif /* _ICE_LAG_H_ */
 diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 5b646b5c2fdb..38e6d57245a9 100644
+index 5b646b5c2fdb..2a46c0efcbf2 100644
 --- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
 @@ -483,9 +483,13 @@ static void ice_notify_vf_reset(struct ice_vf *vf)
@@ -124,8 +124,8 @@ index 5b646b5c2fdb..38e6d57245a9 100644
 +			kfree(entry);
 +		}
 +		lag->netdev_head = NULL;
-+		mutex_unlock(&pf->lag_mutex);
 +	}
++	mutex_unlock(&pf->lag_mutex);
 +
  	return err;
  }
