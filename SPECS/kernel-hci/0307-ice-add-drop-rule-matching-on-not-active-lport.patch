@@ -1,9 +1,8 @@
-From bf60199dd4f9a60a02d56113f71d12c238385a35 Mon Sep 17 00:00:00 2001
-From: Carolyn Wyborny <carolyn.wyborny@intel.com>
-Date: Fri, 25 Aug 2023 09:13:19 +0200
-Subject: [NET-NEXT] ice: add drop rule matching on not active lport
-
+From 977ee09957b33ad620bee2e13ea955331a3044c2 Mon Sep 17 00:00:00 2001
 From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Date: Fri, 25 Aug 2023 09:13:19 +0200
+Subject: [PATCH Mariner 2 307/307] ice: add drop rule matching on not active
+ lport
 
 Inactive LAG port should not receive any packets, as it can cause adding
 invalid FDBs (bridge offload). Add a drop rule matching on inactive lport
@@ -55,7 +54,7 @@ index 04c2f35fb614..bdb36135b57a 100644
  	err = ice_add_adv_rule(hw, list, lkups_cnt, &rule_info, rule);
  	if (err)
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
-index 5854f74b777b..6d607437949f 100644
+index 22e2a880b7da..24748483f30b 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.c
 @@ -19,8 +19,11 @@ static const u8 lacp_train_pkt[LACP_TRAIN_PKT_LEN] = { 0, 0, 0, 0, 0, 0,
@@ -199,7 +198,7 @@ index 5854f74b777b..6d607437949f 100644
  }
  
  /**
-@@ -1201,6 +1242,7 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
+@@ -1243,6 +1284,7 @@ static void ice_lag_changeupper_event(struct ice_lag *lag, void *ptr)
  			swid = primary_lag->pf->hw.port_info->sw_id;
  			ice_lag_set_swid(swid, lag, true);
  			ice_lag_add_prune_list(primary_lag, lag->pf);
@@ -207,7 +206,7 @@ index 5854f74b777b..6d607437949f 100644
  		}
  		/* add filter for primary control packets */
  		ice_lag_cfg_cp_fltr(lag, true);
-@@ -1954,11 +1996,16 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -1996,11 +2038,16 @@ int ice_init_lag(struct ice_pf *pf)
  		goto lag_error;
  	}
  
@@ -226,7 +225,7 @@ index 5854f74b777b..6d607437949f 100644
  	/* associate recipes to profiles */
  	for (n = 0; n < ICE_PROFID_IPV6_GTPU_IPV6_TCP_INNER; n++) {
  		err = ice_aq_get_recipe_to_profile(&pf->hw, n,
-@@ -1967,7 +2014,8 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -2009,7 +2056,8 @@ int ice_init_lag(struct ice_pf *pf)
  			continue;
  
  		if (recipe_bits & BIT(ICE_SW_LKUP_DFLT)) {
@@ -236,7 +235,7 @@ index 5854f74b777b..6d607437949f 100644
  			ice_aq_map_recipe_to_profile(&pf->hw, n,
  						     (u8 *)&recipe_bits, NULL);
  		}
-@@ -1978,6 +2026,9 @@ int ice_init_lag(struct ice_pf *pf)
+@@ -2020,6 +2068,9 @@ int ice_init_lag(struct ice_pf *pf)
  	dev_dbg(dev, "INIT LAG complete\n");
  	return 0;
  
@@ -246,7 +245,7 @@ index 5854f74b777b..6d607437949f 100644
  lag_error:
  	kfree(lag);
  	pf->lag = NULL;
-@@ -2007,6 +2058,8 @@ void ice_deinit_lag(struct ice_pf *pf)
+@@ -2049,6 +2100,8 @@ void ice_deinit_lag(struct ice_pf *pf)
  
  	ice_free_hw_res(&pf->hw, ICE_AQC_RES_TYPE_RECIPE, 1,
  			&pf->lag->pf_recipe);
@@ -256,7 +255,7 @@ index 5854f74b777b..6d607437949f 100644
  	kfree(lag);
  
 diff --git a/drivers/net/ethernet/intel/ice/ice_lag.h b/drivers/net/ethernet/intel/ice/ice_lag.h
-index 3027e44acc94..53013b1188f2 100644
+index daf210e62fac..b94cc352723c 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lag.h
 +++ b/drivers/net/ethernet/intel/ice/ice_lag.h
 @@ -39,8 +39,10 @@ struct ice_lag {
@@ -271,5 +270,5 @@ index 3027e44acc94..53013b1188f2 100644
  };
  
 -- 
-2.34.1
+2.40.1
 
