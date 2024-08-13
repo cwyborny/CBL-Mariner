@@ -1,0 +1,32 @@
+{
+    "SystemConfigs": [
+        {
+            "Name": "ACC Full",
+            "PackageLists": [
+                "packagelists/hyperv-packages.json",
+                "packagelists/ipu-tools-packages.json",
+                "packagelists/ipu-container-packages.json",
+		"packagelists/ipu-core-packages.json",
+                "packagelists/core-packages-image-aarch64.json",
+                "packagelists/selinux-full.json"
+            ],
+            "KernelCommandLine": {
+                "SELinux": "permissive"
+            },
+            "KernelOptions": {
+                "default": "kernel"
+            }
+        },
+        {
+            "Name": "ACC Core",
+            "PackageLists": [
+                "packagelists/hyperv-packages.json",
+		"packagelists/ipu-core-packages.json",
+                "packagelists/core-packages-image-aarch64.json"
+            ],
+            "KernelOptions": {
+                "default": "kernel"
+            }
+        }
+    ]
+}

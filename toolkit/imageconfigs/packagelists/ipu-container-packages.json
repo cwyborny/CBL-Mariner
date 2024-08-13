@@ -1,0 +1,11 @@
+{
+    "packages": [
+	"cri-o",
+	"cri-o-kubeadm-criconfig",
+	"cri-tools",
+	"kubernetes",
+	"kubernetes-kubeadm",
+	"podman",
+	"podman-docker"
+    ]
+}

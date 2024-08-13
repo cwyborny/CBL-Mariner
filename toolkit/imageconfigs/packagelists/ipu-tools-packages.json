@@ -1,0 +1,15 @@
+{
+    "packages": [
+	"bcc",
+	"bcc-tools",
+	"blktrace",
+	"bpftrace",
+	"lsof",
+	"ltrace",
+	"perftest",
+	"python3-bcc",
+	"rsync",
+	"strace",
+	"tcpdump"
+    ]
+}

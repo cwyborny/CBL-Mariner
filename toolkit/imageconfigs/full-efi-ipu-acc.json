@@ -1,0 +1,54 @@
+{
+    "Disks": [
+        {
+            "PartitionTableType": "gpt",
+            "MaxSize": 4096,
+            "Partitions": [
+                {
+                    "ID": "boot",
+                    "Flags": [
+                        "esp",
+                        "boot"
+                    ],
+                    "Start": 1,
+                    "End": 9,
+                    "FsType": "fat32"
+                },
+                {
+                    "ID": "rootfs",
+                    "Start": 9,
+                    "End": 0,
+                    "FsType": "ext4"
+                }
+            ]
+        }
+    ],
+    "SystemConfigs": [
+        {
+            "Name": "Core ACC",
+            "BootType": "efi",
+            "PartitionSettings": [
+                {
+                    "ID": "boot",
+                    "MountPoint": "/boot/efi",
+                    "MountOptions" : "umask=0077"
+                },
+                {
+                    "ID": "rootfs",
+                    "MountPoint": "/"
+                }
+            ],
+            "PackageLists": [
+                "packagelists/ipu-core-packages.json",
+                "packagelists/ipu-tools-packages.json",
+                "packagelists/ipu-container-packages.json",
+                "packagelists/hyperv-packages.json",
+                "packagelists/core-packages-image-aarch64.json",
+                "packagelists/cloud-init-packages.json"
+            ],
+            "KernelOptions": {
+                "default": "kernel"
+            }
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "packages": [
+	"iproute",
+	"iscsi-initiator-utils",
+	"netplan",
+	"net-tools",
+	"openssh",
+	"systemd",
+	"systemd-devel"
+
+    ]
+}

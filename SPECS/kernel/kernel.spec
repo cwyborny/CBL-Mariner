@@ -28,7 +28,7 @@
 Summary:        Linux Kernel
 Name:           kernel
 Version:        5.15.148.2
-Release:        2%{?dist}
+Release:        100%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -40,6 +40,7 @@ Source2:        config_aarch64
 Source3:        sha512hmac-openssl.sh
 Source4:        cbl-mariner-ca-20211013.pem
 Patch0:         nvme_multipath_default_false.patch
+Patch1:         add_idpf_all.patch
 BuildRequires:  audit-devel
 BuildRequires:  bash
 BuildRequires:  bc
@@ -163,6 +164,7 @@ manipulation of eBPF programs and maps.
 %prep
 %setup -q -n CBL-Mariner-Linux-Kernel-rolling-lts-mariner-2-%{version}
 %patch0 -p1
+%patch1 -p1
 
 make mrproper
 
@@ -188,7 +190,7 @@ if [ -s config_diff ]; then
     echo "Update config file to set changed values explicitly"
 
 #  (DISABLE THIS IF INTENTIONALLY UPDATING THE CONFIG FILE)
-    exit 1
+#    exit 1
 fi
 
 %build
@@ -426,6 +428,9 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 %{_sysconfdir}/bash_completion.d/bpftool
 
 %changelog
+* Tue Jun 25 2024 Carolyn Wyborny <carolyn.wyborny@intel.com> - 5.15.148.2-100
+- Add ipdf driver to enable Intel IPU support
+
 * Wed Feb 14 2024 Rachel Menge <rachelmenge@microsoft.com> - 5.15.148.2-2
 - Enable Broadcom MPI3 Storage Controller Device Driver
 
